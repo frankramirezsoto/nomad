@@ -1,0 +1,166 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Business {
+  business_id                            Int           @id @default(autoincrement())
+  b_user_id                              Int
+  b_type_id                              Int
+  business_tax_id                        String
+  name                                   String
+  short_description                      String
+  full_description                       String
+  address                                String
+  district                               String
+  canton                                 String
+  province                               String
+  latitude                               Decimal       @db.Decimal(9, 6)
+  longitude                              Decimal       @db.Decimal(9, 6)
+  days_operation                         String
+  operates_from                          DateTime      @db.Time(6)
+  operates_to                            DateTime      @db.Time(6)
+  call_to_action                         Int
+  BusinessUser                           BusinessUser  @relation(fields: [b_user_id], references: [b_user_id], onDelete: NoAction, onUpdate: NoAction, map: "Business_fk1")
+  Social_Business_call_to_actionToSocial Social        @relation("Business_call_to_actionToSocial", fields: [call_to_action], references: [social_id], onDelete: NoAction, onUpdate: NoAction, map: "Business_fk16")
+  BusinessTypes                          BusinessTypes @relation(fields: [b_type_id], references: [b_type_id], onDelete: NoAction, onUpdate: NoAction, map: "Business_fk2")
+  Images                                 Images[]
+  Review                                 Review[]
+  Social_Social_business_idToBusiness    Social[]      @relation("Social_business_idToBusiness")
+  Tour                                   Tour[]
+}
+
+model BusinessTypes {
+  b_type_id Int        @id @default(autoincrement())
+  name      String
+  Business  Business[]
+}
+
+model BusinessUser {
+  b_user_id  Int        @id @default(autoincrement())
+  first_name String
+  last_name  String
+  email      String
+  password   String
+  phone_area String?
+  phone      String?
+  Business   Business[]
+}
+
+model Images {
+  image_id    Int       @id @default(autoincrement())
+  business_id Int?
+  tour_id     Int?
+  image       Bytes
+  Business    Business? @relation(fields: [business_id], references: [business_id], onDelete: NoAction, onUpdate: NoAction, map: "Images_fk1")
+  Tour        Tour?     @relation(fields: [tour_id], references: [tour_id], onDelete: NoAction, onUpdate: NoAction, map: "Images_fk2")
+}
+
+model Itinerary {
+  itinerary_id Int      @id @default(autoincrement())
+  user_id      Int
+  tour_id      Int
+  tour_date    DateTime @db.Date
+  tour_time    DateTime @db.Time(6)
+  adults       Int
+  kids         Int?
+  User         User     @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "Itinerary_fk1")
+  Tour         Tour     @relation(fields: [tour_id], references: [tour_id], onDelete: NoAction, onUpdate: NoAction, map: "Itinerary_fk2")
+}
+
+model PaymentCard {
+  card_id     Int           @id @default(autoincrement())
+  user_id     Int
+  card_type   String
+  card_number String
+  exp_date    DateTime      @db.Date
+  cvv         String
+  User        User          @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "PaymentCard_fk1")
+  Reservation Reservation[]
+}
+
+model Reservation {
+  reservation_id   Int         @id @default(autoincrement())
+  user_id          Int
+  tour_id          Int
+  card_id          Int
+  first_name       String
+  last_name        String
+  email            String
+  phone_area       String
+  phone            String
+  order_date       DateTime    @db.Date
+  reservation_date DateTime    @db.Date
+  reservation_time DateTime    @db.Time(6)
+  adults           Int
+  kids             Int?
+  total            Decimal     @db.Decimal(10, 2)
+  User             User        @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "Reservation_fk1")
+  Tour             Tour        @relation(fields: [tour_id], references: [tour_id], onDelete: NoAction, onUpdate: NoAction, map: "Reservation_fk2")
+  PaymentCard      PaymentCard @relation(fields: [card_id], references: [card_id], onDelete: NoAction, onUpdate: NoAction, map: "Reservation_fk3")
+}
+
+model Review {
+  review_id   Int       @id @default(autoincrement())
+  user_id     Int
+  tour_id     Int?
+  business_id Int?
+  rating      Int
+  comment     String?
+  User        User      @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "Review_fk1")
+  Tour        Tour?     @relation(fields: [tour_id], references: [tour_id], onDelete: NoAction, onUpdate: NoAction, map: "Review_fk2")
+  Business    Business? @relation(fields: [business_id], references: [business_id], onDelete: NoAction, onUpdate: NoAction, map: "Review_fk3")
+}
+
+model Social {
+  social_id                                Int        @id @default(autoincrement())
+  business_id                              Int
+  name                                     String
+  url                                      String
+  Business_Business_call_to_actionToSocial Business[] @relation("Business_call_to_actionToSocial")
+  Business_Social_business_idToBusiness    Business   @relation("Social_business_idToBusiness", fields: [business_id], references: [business_id], onDelete: NoAction, onUpdate: NoAction, map: "Social_fk1")
+}
+
+model Tour {
+  tour_id           Int           @id @default(autoincrement())
+  business_id       Int
+  name              String
+  short_description String
+  full_description  String
+  address           String
+  district          String
+  canton            String
+  province          String
+  latitude          Decimal       @db.Decimal(9, 6)
+  longitude         Decimal       @db.Decimal(9, 6)
+  price_person      Decimal       @db.Decimal(10, 2)
+  discount          Decimal       @db.Decimal(10, 2)
+  discount_start    DateTime      @db.Date
+  discount_end      DateTime      @db.Date
+  days_operation    String
+  operates_from     DateTime      @db.Time(6)
+  operates_to       DateTime      @db.Time(6)
+  Images            Images[]
+  Itinerary         Itinerary[]
+  Reservation       Reservation[]
+  Review            Review[]
+  Business          Business      @relation(fields: [business_id], references: [business_id], onDelete: NoAction, onUpdate: NoAction, map: "Tour_fk1")
+}
+
+model User {
+  user_id     Int           @id @default(autoincrement())
+  first_name  String
+  last_name   String
+  email       String
+  password    String
+  phone_area  String?
+  phone       String?
+  Itinerary   Itinerary[]
+  PaymentCard PaymentCard[]
+  Reservation Reservation[]
+  Review      Review[]
+}
