@@ -6,7 +6,7 @@ import Register from "./Register";
 
 function AccessBtn(props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  if (props.children == "Sign In") {
+  if (props.children == "Login") {
     return(
         <>
             <button
