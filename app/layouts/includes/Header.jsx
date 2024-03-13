@@ -2,8 +2,12 @@
 
 import ItineraryCart from "./ItineraryCart.jsx";
 import AccessBtn from "./AccessBtn.jsx";
+import { useAuth } from "@/app/context/AuthContext.js";
+import UserOptionsMenu from "./UserOptionsMenu.jsx";
 
 export default function Header() {
+  const { user } = useAuth();
+
   return (
     <header className="header-bg-forest text-white">
       <div className="backdrop-brightness-50 py-5 lg:py-7 ">
@@ -14,8 +18,16 @@ export default function Header() {
 
           <div className="inline-flex items-center">
             <div className="me-10">
-              <AccessBtn>Sign In</AccessBtn>
-              <AccessBtn>Register</AccessBtn>
+              {!user ?
+                <div>
+                  <AccessBtn>Login</AccessBtn>
+                  <AccessBtn>Register</AccessBtn>
+                </div>
+              :
+                <div className="text-black">
+                  <UserOptionsMenu></UserOptionsMenu>
+                </div>
+              }  
             </div>
             <ItineraryCart />
           </div>

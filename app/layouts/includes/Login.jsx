@@ -7,15 +7,21 @@ import {
   Input,
   FormLabel,
 } from "@chakra-ui/react";
+import { useAuth } from "@/app/context/AuthContext";
+import { useToast } from '@chakra-ui/react'
 
-function Login() {
+export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { login } = useAuth();
+  const toast = useToast();
 
+  //Function to handle login submit
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevents the default form submission
     
     try {
+      //Fetches data from api
       const response = await fetch('/api/auth', {
         method: 'POST',
         headers: {
@@ -23,14 +29,20 @@ function Login() {
         },
         body: JSON.stringify({ email, password }),
       });
-  
+      
       if (response.ok) { 
+        //Converts response to Json and logs the userData using the AuthContext
         const userData = await response.json(); 
-        // Handle successful login here (e.g., redirect, store user data)
-        console.log('Login successful:', userData.data);
+        login(userData.data);
       } else {
-        const res = await response.json(); 
-        console.log(res)
+        const error = await response.json(); 
+        toast({
+          title: `${error.error}`,
+          duration: 9000,
+          isClosable: true,
+          status:"error",
+          position:"top-right"
+        })
         // Handle errors, such as showing an error message
         console.error('Login failed');
       }
@@ -72,4 +84,3 @@ function Login() {
     </form>
   );
 }
-export default Login;
