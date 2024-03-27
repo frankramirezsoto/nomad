@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import Header from "./includes/Header";
 import Footer from "./includes/Footer";
-import Loading from "../components/Loading";
+import Loading from "../../components/Loading";
 
 const MainLayout = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false)
@@ -18,7 +18,7 @@ const MainLayout = ({ children }) => {
     <>
       {isLoading ? <Loading /> : <div></div>}
       <div>
-        <Header />
+
         <main>
           {children}
         </main>

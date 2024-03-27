@@ -10,6 +10,7 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [businessUser, setBusinessUser] = useState(null);
 
   // Function to "log in" a user
   const login = (userData) => {
@@ -21,10 +22,23 @@ export function AuthProvider({ children }) {
     setUser(null);
   };
 
+  // Function to "log in" a user
+  const loginBusiness = (buserData) => {
+    setBusinessUser(buserData);
+  };
+
+  // Function to "log out" a user
+  const logoutBusiness = () => {
+    setBusinessUser(null);
+  };
+
   const value = {
     user,
+    businessUser,
     login,
     logout,
+    loginBusiness,
+    logoutBusiness
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -102,29 +102,29 @@ export default function Register() {
         Sign Up
       </h2>
       <div className="mt-4 grid grid-cols-2 gap-4">
-        <FormControl>
+        <FormControl isRequired>
           <FormLabel>First Name</FormLabel>
-          <Input name="first_name" value={formData.first_name} onChange={handleChange} />
+          <Input name="first_name" value={formData.first_name} onChange={handleChange}/>
         </FormControl>
-        <FormControl>
+        <FormControl isRequired>
           <FormLabel>Last Name</FormLabel>
           <Input name="last_name" value={formData.last_name} onChange={handleChange} />
         </FormControl>
       </div>
       <div className="mt-4">
-        <FormControl>
+        <FormControl isRequired>
           <FormLabel>Email address</FormLabel>
           <Input type="email" name="email" value={formData.email} onChange={handleChange} />
         </FormControl>
       </div>
       <div className="mt-4">
-        <FormControl>
+        <FormControl isRequired> 
           <FormLabel>Password</FormLabel>
           <Input type="password" name="password" value={formData.password} onChange={handleChange} />
         </FormControl>
       </div>
       <div className="mt-4">
-        <FormControl>
+        <FormControl isRequired>
           <FormLabel>Confirm Password</FormLabel>
           <Input type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} />
         </FormControl>
@@ -138,53 +138,6 @@ export default function Register() {
         </Button>
       </div>
     </form>
-    // <form onSubmit={handleSubmit} className="p-16">
-    //   <div className="p-16">
-    //   <div className="flex justify-end bg-teal-400">
-    //     <ModalCloseButton></ModalCloseButton>
-    //   </div>
-    //   <p className="text-xl text-gray-600 text-center">Welcome to</p>
-    //   <h2 className="text-2xl font-semibold text-gray-700 text-center">
-    //     Brand
-    //   </h2>
-    //   <div className="mt-4 grid grid-cols-2 gap-4">
-    //     <FormControl>
-    //       <FormLabel>First Name</FormLabel>
-    //       <Input />
-    //     </FormControl>
-    //     <FormControl>
-    //       <FormLabel>Last Name</FormLabel>
-    //       <Input />
-    //     </FormControl>
-    //   </div>
-    //   <div className="mt-4">
-    //     <FormControl>
-    //       <FormLabel>Email address</FormLabel>
-    //       <Input type="email" />
-    //     </FormControl>
-    //   </div>
-    //   <div className="mt-4">
-    //     <FormControl>
-    //       <FormLabel>Password</FormLabel>
-    //       <Input type="password" />
-    //     </FormControl>
-    //   </div>
-    //   <div className="mt-4">
-    //     <FormControl>
-    //       <FormLabel>Confirm Password</FormLabel>
-    //       <Input type="password" />
-    //     </FormControl>
-    //   </div>
-    //   <div className="mt-8">
-    //     <button
-    //       type="submit"
-    //       className="bg-teal-700 text-white font-bold py-3 px-4 w-full rounded-full hover:bg-teal-600"
-    //     >
-    //       Register
-    //     </button>
-    //   </div>
-    // </div>
-    // </form>
   );
 }
 

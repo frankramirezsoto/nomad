@@ -53,9 +53,7 @@ export default function Login() {
 
   return (
     <form onSubmit={handleSubmit} className="p-16">
-      <div className="flex justify-end bg-teal-400">
-        <ModalCloseButton />
-      </div>
+      <ModalCloseButton />
       <h2 className="text-2xl font-semibold text-gray-700 text-center">
         Brand
       </h2>

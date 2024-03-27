@@ -1,5 +1,5 @@
 import Image from "next/image";
-import MainLayout from "./layouts/MainLayout";
+import MainLayout from "./layouts/main/MainLayout";
 
 export default function Home() {
   return (
