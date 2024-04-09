@@ -93,77 +93,81 @@ export default function Register() {
   };
 
   return (
-    <main className="min-h-screen bg-green-700">
-      <div className="min-h-screen flex justify-center items-center h-100">
-        <Card>
-          <CardBody>
-          <form onSubmit={handleSubmit} className="p-16">
-      <p className="text-xl text-gray-600 text-center">Welcome to Brand</p>
-      <h2 className="text-2xl font-semibold text-gray-700 text-center">
-        Sign Up
-      </h2>
-      <div className="mt-4 grid grid-cols-2 gap-4">
-        <FormControl isRequired>
-          <FormLabel>First Name</FormLabel>
-          <Input
-            name="first_name"
-            value={formData.first_name}
-            onChange={handleChange}
-          />
-        </FormControl>
-        <FormControl isRequired>
-          <FormLabel>Last Name</FormLabel>
-          <Input
-            name="last_name"
-            value={formData.last_name}
-            onChange={handleChange}
-          />
-        </FormControl>
-      </div>
-      <div className="mt-4">
-        <FormControl isRequired>
-          <FormLabel>Email address</FormLabel>
-          <Input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-        </FormControl>
-      </div>
-      <div className="mt-4">
-        <FormControl isRequired>
-          <FormLabel>Password</FormLabel>
-          <Input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-          />
-        </FormControl>
-      </div>
-      <div className="mt-4">
-        <FormControl isRequired>
-          <FormLabel>Confirm Password</FormLabel>
-          <Input
-            type="password"
-            name="confirmPassword"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-          />
-        </FormControl>
-      </div>
-      <div className="mt-8">
-        <Button
-          type="submit"
-          className="bg-teal-700 text-white font-bold py-3 px-4 w-full rounded-full hover:bg-teal-600"
-        >
-          Register
-        </Button>
-      </div>
-    </form>
-          </CardBody>
-        </Card>
+    <main className="min-h-screen business-access-bg">
+      <div className="backdrop-brightness-50">
+        <div className="min-h-screen flex justify-center items-center h-100">
+          <Card>
+            <CardBody>
+              <form onSubmit={handleSubmit} className="p-16">
+                <p className="text-xl text-gray-600 text-center">
+                  Welcome to Brand
+                </p>
+                <h2 className="text-2xl font-semibold text-gray-700 text-center">
+                  Sign Up
+                </h2>
+                <div className="mt-4 grid grid-cols-2 gap-4">
+                  <FormControl isRequired>
+                    <FormLabel>First Name</FormLabel>
+                    <Input
+                      name="first_name"
+                      value={formData.first_name}
+                      onChange={handleChange}
+                    />
+                  </FormControl>
+                  <FormControl isRequired>
+                    <FormLabel>Last Name</FormLabel>
+                    <Input
+                      name="last_name"
+                      value={formData.last_name}
+                      onChange={handleChange}
+                    />
+                  </FormControl>
+                </div>
+                <div className="mt-4">
+                  <FormControl isRequired>
+                    <FormLabel>Email address</FormLabel>
+                    <Input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                    />
+                  </FormControl>
+                </div>
+                <div className="mt-4">
+                  <FormControl isRequired>
+                    <FormLabel>Password</FormLabel>
+                    <Input
+                      type="password"
+                      name="password"
+                      value={formData.password}
+                      onChange={handleChange}
+                    />
+                  </FormControl>
+                </div>
+                <div className="mt-4">
+                  <FormControl isRequired>
+                    <FormLabel>Confirm Password</FormLabel>
+                    <Input
+                      type="password"
+                      name="confirmPassword"
+                      value={formData.confirmPassword}
+                      onChange={handleChange}
+                    />
+                  </FormControl>
+                </div>
+                <div className="mt-8">
+                  <Button
+                    type="submit"
+                    className="bg-teal-700 text-white font-bold py-3 px-4 w-full rounded-full hover:bg-teal-600"
+                  >
+                    Register
+                  </Button>
+                </div>
+              </form>
+            </CardBody>
+          </Card>
+        </div>
       </div>
     </main>
   );

@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { useAuth } from "@/app/context/AuthContext";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -19,8 +19,8 @@ export default function Login() {
   const toast = useToast();
   const router = useRouter();
 
-  if(businessUser){
-    router.push('/business/portal');
+  if (businessUser) {
+    router.push("/business/portal");
   }
   //Function to handle login submit
   const handleSubmit = async (event) => {
@@ -58,42 +58,44 @@ export default function Login() {
   };
 
   return (
-    <main className="min-h-screen bg-green-700">
-      <div className="min-h-screen flex justify-center items-center h-100">
-        <Card>
-          <CardBody>
-            <form onSubmit={handleSubmit}>
-              <div className="mt-4">
-                <FormControl>
-                  <FormLabel>Email address</FormLabel>
-                  <Input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </FormControl>
-              </div>
-              <div className="mt-4">
-                <FormControl>
-                  <FormLabel>Password</FormLabel>
-                  <Input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </FormControl>
-              </div>
-              <div className="mt-8">
-                <button
-                  type="submit"
-                  className="bg-teal-700 text-white font-bold py-3 px-4 w-full rounded-full hover:bg-teal-600"
-                >
-                  Login
-                </button>
-              </div>
-            </form>
-          </CardBody>
-        </Card>
+    <main className="min-h-screen business-access-bg">
+      <div className="backdrop-brightness-50">
+        <div className="min-h-screen flex justify-center items-center h-100">
+          <Card>
+            <CardBody>
+              <form onSubmit={handleSubmit}>
+                <div className="mt-4">
+                  <FormControl>
+                    <FormLabel>Email address</FormLabel>
+                    <Input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                  </FormControl>
+                </div>
+                <div className="mt-4">
+                  <FormControl>
+                    <FormLabel>Password</FormLabel>
+                    <Input
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                  </FormControl>
+                </div>
+                <div className="mt-8">
+                  <button
+                    type="submit"
+                    className="bg-teal-700 text-white font-bold py-3 px-4 w-full rounded-full hover:bg-teal-600"
+                  >
+                    Login
+                  </button>
+                </div>
+              </form>
+            </CardBody>
+          </Card>
+        </div>
       </div>
     </main>
   );

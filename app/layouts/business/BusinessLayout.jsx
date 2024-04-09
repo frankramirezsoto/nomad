@@ -27,6 +27,7 @@ export default function BusinessLayout({children}) {
           showSidebarButton={variants?.navigationButton}
           onShowSidebar={toggleSidebar}
         />
+        {children}
       </Box>
     </>
   )

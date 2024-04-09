@@ -7,3 +7,8 @@
   background-size: cover;
   background-position: bottom;
 }
+
+.business-access-bg {
+  background-image: url('https://source.unsplash.com/random/900×700/?costa,rica');
+  background-size: cover;
+}

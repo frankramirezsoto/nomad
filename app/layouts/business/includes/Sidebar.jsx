@@ -13,7 +13,7 @@ import {
   } from '@chakra-ui/react'
   
   const SidebarContent = () => (
-    <VStack>
+    <VStack mt={12}>
       <Button w="100%">
         Account
       </Button>
@@ -35,7 +35,7 @@ import {
         w="200px"
         top={0}
         h="100%"
-        bg="#dfdfdf"
+        bg="#171923"
       >
         <SidebarContent onClick={onClose} />
       </Box>
@@ -44,7 +44,7 @@ import {
         <DrawerOverlay>
           <DrawerContent>
             <DrawerCloseButton />
-            <DrawerHeader>Chakra-UI</DrawerHeader>
+            <DrawerHeader></DrawerHeader>
             <DrawerBody>
               <SidebarContent onClick={onClose} />
             </DrawerBody>

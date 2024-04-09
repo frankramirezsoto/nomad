@@ -54,12 +54,12 @@ export default function Footer() {
                 <div className="flex">
                 <ul className="leading-8">
                   <li>
-                    <a href="#" className="hover:text-teal-400">
-                      Register your Business
+                    <a href="/business/register" className="hover:text-teal-400">
+                    Register your Business
                     </a>
                   </li>
                   <li>
-                    <a href="#" className="hover:text-teal-400">
+                    <a href="/business/login" className="hover:text-teal-400">
                       Administration Portal
                     </a>
                   </li>
