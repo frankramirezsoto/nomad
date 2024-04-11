@@ -27,6 +27,22 @@ export default function MyBusinesses() {
               <FaPlus size={30}/>
             </Center>
           </Box>
+
+          <Box
+            as="Card"
+            onClick={() => router.push('/business/portal/myBusinesses/add')}
+            borderWidth="1px"
+            borderRadius="lg"
+            overflow="hidden"
+            minHeight="10rem"
+            minW="15rem"
+            sx={{ transition: "transform 0.3s ease-in-out" }}
+            _hover={{ transform: "scale(1.1)" }}
+          >
+            <Center>
+              <FaPlus size={30}/>
+            </Center>
+          </Box>
         </Box>
       </HStack>
     </BusinessLayout>
