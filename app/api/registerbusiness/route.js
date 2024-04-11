@@ -31,6 +31,7 @@ export async function POST(req, res) {
       },
     });
 
+    await prisma.$disconnect();
     // Respond with the created user (omit sensitive information)
     const { password: _, ...userInfo } = user;
     return NextResponse.json({ data: userInfo }, { status: 200 });

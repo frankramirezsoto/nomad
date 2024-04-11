@@ -14,6 +14,8 @@ export async function POST(req) {
           image: Buffer.from(image, 'base64'), 
         },
       });
+      
+      await prisma.$disconnect();
       return NextResponse.json({data: newImage}, { status: 200 })
     } catch (error) {
       console.error('Failed to add image:', error);

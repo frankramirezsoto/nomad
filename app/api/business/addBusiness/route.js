@@ -12,6 +12,7 @@ export async function POST(req) {
         const newBusiness = await prisma.business.create({
           data: request,
         });
+        await prisma.$disconnect();
         // Send the created business as a response
         return NextResponse.json({data: newBusiness}, { status: 200 })
       } catch (error) {

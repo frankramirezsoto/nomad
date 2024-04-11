@@ -21,8 +21,7 @@ export default function Loading() {
             "
         >
             <div className="p-3 rounded-md">
-                <AiOutlineLoading3Quarters size={100} className="text-blue-400 animate-spin"/>
-                <div className="text-center pt-5 text-xl font-bold text-white">Loading...</div>
+                <AiOutlineLoading3Quarters size={100} className="text-teal-400 animate-spin"/>
             </div>
         </div>
     </>

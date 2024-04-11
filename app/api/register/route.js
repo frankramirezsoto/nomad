@@ -13,7 +13,7 @@ export async function POST(req, res) {
     const existingUser = await prisma.user.findUnique({
       where: { email },
     });
-    console.log(existingUser);
+    
     if (existingUser) {
       return NextResponse.json(
         { message: "It looks like you already have account. Login now!" },
@@ -30,7 +30,8 @@ export async function POST(req, res) {
         last_name,
       },
     });
-
+    await prisma.$disconnect();
+    
     // Respond with the created user (omit sensitive information)
     const { password: _, ...userInfo } = user;
     return NextResponse.json({ data: userInfo }, { status: 200 });
