@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, HStack, Center, Text, Skeleton } from "@chakra-ui/react";
+import { Box, Stack, Center, Text, Skeleton } from "@chakra-ui/react";
 import { FaPlus } from "react-icons/fa";
 import BusinessLayout from "@/app/layouts/business/BusinessLayout";
 import { useRouter } from "next/navigation";
@@ -38,7 +38,7 @@ export default function MyBusinesses() {
 
   return (
     <BusinessLayout>
-      <HStack p={7} spacing={4}>
+      <Box className="p-7 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         <Box
           as="Button"
           onClick={() => router.push("/business/portal/myBusinesses/add")}
@@ -57,8 +57,8 @@ export default function MyBusinesses() {
         </Box>
         {loading ? (
         // Render spinner while loading
-        <Skeleton  h='10rem' w='15rem'borderWidth="1px" borderRadius="lg"/>
-      ) : (
+        <Skeleton minHeight="10rem" minborderWidth="1px" borderRadius="lg"/>
+        ) : (
         // Render businesses once loaded
         businesses &&
           businesses.map((business) => {
@@ -69,14 +69,14 @@ export default function MyBusinesses() {
                     .toString("base64")
                     .replace("data", "data:")
                     .replace("base64", ";base64,")
-                    .replace("=", "")}`
+                    .replace(/=/g, "")}`
                 : null;
 
             return (
               <Box
                 key={business.business_id}
                 as="Button"
-                onClick={() => router.push("/business/portal/myBusinesses/add")}
+                onClick={() => router.push(`/business/portal/myBusinesses/edit/${business.business_id}`)}
                 borderWidth="1px"
                 borderRadius="lg"
                 minHeight="10rem"
@@ -99,7 +99,7 @@ export default function MyBusinesses() {
             );
           })
       )}
-      </HStack>
+      </Box>
     </BusinessLayout>
   );
 }

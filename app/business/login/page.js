@@ -20,7 +20,7 @@ export default function Login() {
   const router = useRouter();
 
   if (businessUser) {
-    router.push("/business/portal");
+    router.push("/business/portal/myBusinesses");
   }
   //Function to handle login submit
   const handleSubmit = async (event) => {

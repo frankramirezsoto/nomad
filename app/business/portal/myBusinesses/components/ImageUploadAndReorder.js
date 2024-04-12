@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 
 const ImageUploadAndReorder = ({ images, setImages }) => {
-  const [draggedIndex, setDraggedIndex] = useState(null);
   const [imageUrls, setImageUrls] = useState([]);
 
   useEffect(() => {
@@ -26,25 +25,9 @@ const ImageUploadAndReorder = ({ images, setImages }) => {
     });
 
     Promise.all(base64Images).then((base64Array) => {
-      setImages(base64Array);
+      // Concatenate the new images with the existing ones
+      setImages([...images, ...base64Array]);
     });
-  };
-
-  const handleDragStart = (index) => {
-    setDraggedIndex(index);
-  };
-
-  const handleDragOver = (event) => {
-    event.preventDefault();
-  };
-
-  const handleDrop = (index) => {
-    const newImages = [...images];
-    const draggedImage = newImages[draggedIndex];
-    newImages.splice(draggedIndex, 1);
-    newImages.splice(index, 0, draggedImage);
-    setImages(newImages);
-    setDraggedIndex(null);
   };
 
   const handleDelete = (index) => {
@@ -78,9 +61,6 @@ const ImageUploadAndReorder = ({ images, setImages }) => {
               <span>Drag and drop</span>
               <span className="text-teal-600"> or browse</span>
               <span> to upload</span>
-              <p className="text-gray-500">
-                *The first image is the default image, you may drag and drop the images to sort them
-              </p>
               <input id="file-upload" name="file-upload" type="file" className="sr-only" />
             </label>
           </h3>
@@ -89,18 +69,9 @@ const ImageUploadAndReorder = ({ images, setImages }) => {
       </div>
       <div className="image-gallery">
         {imageUrls.map((imageUrl, index) => (
-          <div
-            key={index}
-            className={`image-container ${
-              index === 0 ? 'border-4 border-green-700' : ''
-            }`}
-            draggable
-            onDragStart={() => handleDragStart(index)}
-            onDragOver={handleDragOver}
-            onDrop={() => handleDrop(index)}
-          >
+          <div key={index} className={`image-container`}>
             <img src={imageUrl} alt={`Image ${index + 1}`} />
-            <button onClick={() => handleDelete(index)}>&times;</button>
+            <button type="button" onClick={() => handleDelete(index)}>&times;</button>
           </div>
         ))}
       </div>
@@ -137,6 +108,8 @@ const ImageUploadAndReorder = ({ images, setImages }) => {
 };
 
 export default ImageUploadAndReorder;
+
+
 
 
 
