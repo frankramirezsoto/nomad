@@ -6,11 +6,12 @@ const prisma = new PrismaClient();
 
 export async function POST(req) {
     const request = await req.json()
-    const {business_id, image} = request;
+    const {business_id, tour_id, image} = request;
     try {
       const newImage = await prisma.images.create({
         data: {
           business_id,
+          tour_id,
           image: Buffer.from(image, 'base64'), 
         },
       });

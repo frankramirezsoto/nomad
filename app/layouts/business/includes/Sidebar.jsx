@@ -24,7 +24,7 @@ const SidebarContent = () => {
       >
         My Businesses
       </Button>
-      <Button w="100%">My Tours</Button>
+      <Button w="100%" onClick={() => router.push("/business/portal/myTours")}>My Tours</Button>
     </VStack>
   )
 }

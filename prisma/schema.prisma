@@ -30,7 +30,6 @@ model Business {
   BusinessTypes     BusinessTypes @relation(fields: [b_type_id], references: [b_type_id], onDelete: NoAction, onUpdate: NoAction, map: "Business_fk2")
   Images            Images[]
   Review            Review[]
-  Tour              Tour[]
 }
 
 model BusinessTypes {
@@ -48,6 +47,7 @@ model BusinessUser {
   phone_area String?
   phone      String?
   Business   Business[]
+  Tour       Tour[]
 }
 
 model Images {
@@ -55,8 +55,8 @@ model Images {
   business_id Int?
   tour_id     Int?
   image       Bytes
-  Business    Business? @relation(fields: [business_id], references: [business_id], onDelete: NoAction, onUpdate: NoAction, map: "Images_fk1")
   Tour        Tour?     @relation(fields: [tour_id], references: [tour_id], onDelete: NoAction, onUpdate: NoAction, map: "Images_fk2")
+  Business    Business? @relation(fields: [business_id], references: [business_id], onDelete: Cascade, map: "Images_fk1")
 }
 
 model Itinerary {
@@ -117,7 +117,6 @@ model Review {
 
 model Tour {
   tour_id           Int           @id @default(autoincrement())
-  business_id       Int
   name              String
   short_description String
   full_description  String
@@ -128,17 +127,19 @@ model Tour {
   latitude          Decimal       @db.Decimal(9, 6)
   longitude         Decimal       @db.Decimal(9, 6)
   price_person      Decimal       @db.Decimal(10, 2)
-  discount          Decimal       @db.Decimal(10, 2)
-  discount_start    DateTime      @db.Date
-  discount_end      DateTime      @db.Date
+  discount          Decimal?      @db.Decimal(10, 2)
+  discount_start    DateTime?     @db.Date
+  discount_end      DateTime?     @db.Date
   days_operation    String
-  operates_from     DateTime      @db.Time(6)
-  operates_to       DateTime      @db.Time(6)
+  operates_from     String
+  operates_to       String
+  b_user_id         Int
+  phone_number      String
   Images            Images[]
   Itinerary         Itinerary[]
   Reservation       Reservation[]
   Review            Review[]
-  Business          Business      @relation(fields: [business_id], references: [business_id], onDelete: NoAction, onUpdate: NoAction, map: "Tour_fk1")
+  BusinessUser      BusinessUser  @relation(fields: [b_user_id], references: [b_user_id], onDelete: Cascade, map: "public_Tour_b_user_id_fkey")
 }
 
 model User {

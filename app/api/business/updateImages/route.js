@@ -4,15 +4,24 @@ import { NextResponse } from 'next/server';
 const prisma = new PrismaClient();
 
 export async function PUT(req) {
-  const { business_id, images } = await req.json();
+  const { business_id, tour_id, images } = await req.json();
 
   try {
-    // Delete all existing images associated with the business_id
-    await prisma.images.deleteMany({
-      where: {
-        business_id: parseInt(business_id), // Ensure the ID is an integer
-      },
-    });
+    if(business_id){
+      // Delete all existing images associated with the business_id
+      await prisma.images.deleteMany({
+        where: {
+          business_id: parseInt(business_id), // Ensure the ID is an integer
+        },
+      });
+    } else if(tour_id){
+      // Delete all existing images associated with the tour_id
+      await prisma.images.deleteMany({
+        where: {
+          tour_id: parseInt(tour_id), // Ensure the ID is an integer
+        },
+      });
+    }
 
     // Add the new images
     const createdImages = await Promise.all(
@@ -20,6 +29,7 @@ export async function PUT(req) {
         const createdImage = await prisma.images.create({
             data: {
                 business_id,
+                tour_id,
                 image: Buffer.from(image, 'base64'), 
               },
         });

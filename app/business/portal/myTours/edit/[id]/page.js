@@ -12,12 +12,12 @@ import { useDisclosure, Box, Container, useToast, Modal, Button,
   ModalBody,
   ModalCloseButton, Text, Center } from "@chakra-ui/react";
 import Loading from "@/app/components/Loading";
-import FormBusiness from "../../../components/FormBusiness";
+import FormTour from "../../../components/FormTour";
 
-export default function EditBusiness({ params }) {
-  //Gets Business Id from param 
-  const businessId = params.id;
-  //Gets Business User from Context
+export default function EditTour({ params }) {
+  //Gets Tour Id from param 
+  const tourId = params.id;
+  //Gets Tour User from Context
   const { businessUser } = useAuth();
   //Gets Router to be used
   const router = useRouter();
@@ -31,8 +31,6 @@ export default function EditBusiness({ params }) {
   //This hook is used to stored the Form data as it's being filled out
   const [formData, setFormData] = useState({
     b_user_id: "",
-    b_type_id: "",
-    business_tax_id: "",
     name: "",
     short_description: "",
     full_description: "",
@@ -42,13 +40,15 @@ export default function EditBusiness({ params }) {
     province: "",
     latitude: "",
     longitude: "",
+    price_person:"",
+    discount:"",
+    discount_start:"",
+    discount_end:"",
     days_operation: "0000000",
     operates_from: "",
     operates_to: "",
-    link: "",
     phone_number: "",
   });
-  console.log(formData)
 
   if (businessUser) {
     formData.b_user_id = businessUser.b_user_id;
@@ -57,12 +57,12 @@ export default function EditBusiness({ params }) {
   //Hook to save the paths of the saved images
   const [images, setImages] = useState([]);
 
-  //Fetch the Business Info from the DB
+  //Fetch the Tour Info from the DB
   useEffect(() => {
 
-    const fetchBusinessById = async () => {
+    const fetchTourById = async () => {
       try {
-        const response = await fetch(`/api/business/getBusinessById?business_id=${businessId}`);
+        const response = await fetch(`/api/tours/getTourById?tour_id=${tourId}`);
         const data = await response.json();
         setFormData(data.data);
         setLoading(false);
@@ -77,21 +77,21 @@ export default function EditBusiness({ params }) {
         })
         setImages(imageUrls)
       } catch (error) {
-        console.error('Error fetching business:', error);
+        console.error('Error fetching tour:', error);
       }
     };
 
-    if (businessId) {
-      fetchBusinessById();
+    if (tourId) {
+      fetchTourById();
     }
-  }, [businessId]);
+  }, [tourId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     //Handles success
     setLoading(true);
     try {
-      const response = await fetch('/api/business/updateBusiness', {
+      const response = await fetch('/api/tours/updateTour', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -106,14 +106,14 @@ export default function EditBusiness({ params }) {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ business_id: formData.business_id, images }),
+        body: JSON.stringify({ tour_id: formData.tour_id, images }),
       });
 
       if (imageResponse.ok) {
         const imageData = await imageResponse.json();
         // Handle success
         setLoading(false);
-        router.push("/business/portal/myBusinesses");
+        router.push("/business/portal/myTours");
         toast({
           title: `Successfully updated ${formData.name}`,
           duration: 9000,
@@ -124,7 +124,7 @@ export default function EditBusiness({ params }) {
       } else {
         setLoading(false);
         toast({
-          title: "Failed to update business.",
+          title: "Failed to update tour.",
           duration: 9000,
           isClosable: true,
           status: "error",
@@ -134,7 +134,7 @@ export default function EditBusiness({ params }) {
       } else {
         setLoading(false);
         toast({
-          title: "Failed to update business.",
+          title: "Failed to update tour.",
           duration: 9000,
           isClosable: true,
           status: "error",
@@ -143,25 +143,27 @@ export default function EditBusiness({ params }) {
       }
     } catch (error) {
       setLoading(false);
-      console.error('Error updating business:', error);
+      console.error('Error updating tour:', error);
     }
   };
 
-  // Function to handle business deletion
+  // Function to handle tour deletion
   const handleDelete = async () => {
     try {
-      const response = await fetch("/api/business/deleteBusiness", {
+      setLoading(true);
+      const response = await fetch("/api/tours/deleteTour", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ business_id: params.id }), // Pass the business_id to be deleted
+        body: JSON.stringify({ tour_id: params.id }), // Pass the tour_id to be deleted
       });
       
       if (response.ok) {
         const data = await response.json();
-        router.push("/business/portal/myBusinesses");
+        router.push("/business/portal/myTours");
         // Handle success - e.g., show a success toast
+        setLoading(false);
         toast({
           title: data.message,
           duration: 5000,
@@ -172,6 +174,7 @@ export default function EditBusiness({ params }) {
       } else {
         // Handle error - e.g., show an error toast
         const errorData = await response.json();
+        setLoading(false);
         toast({
           title: errorData.error,
           duration: 5000,
@@ -181,10 +184,11 @@ export default function EditBusiness({ params }) {
         });
       }
     } catch (error) {
-      console.error("Error deleting business:", error);
+      console.error("Error deleting tour:", error);
       // Handle error - e.g., show an error toast
+      setLoading(false);
       toast({
-        title: "Failed to delete business",
+        title: "Failed to delete tour",
         duration: 5000,
         isClosable: true,
         status: "error",
@@ -201,7 +205,7 @@ export default function EditBusiness({ params }) {
           <ModalHeader>Confirm deletion</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Text>Are you sure you want yo delete your business?</Text>
+            <Text>Are you sure you want yo delete your tour?</Text>
           </ModalBody>
 
           <ModalFooter>
@@ -230,20 +234,20 @@ export default function EditBusiness({ params }) {
          </Box>
         </Box>
       </Box> }
-      <FormBusiness 
+      <FormTour 
         formData={formData}
         setFormData={setFormData}
         images={images}
         setImages={setImages}
         handleSubmit={handleSubmit}
-        isEditing={true}></FormBusiness>
+        isEditing={true}></FormTour>
 
           <Container maxW="97%" mb={6}>
             <button
               onClick={onOpen}
               className="bg-orange-700 text-white font-bold py-3 px-4 w-full rounded-full hover:bg-orange-600"
             >
-              DELETE BUSINESS
+              DELETE TOUR
             </button>
           </Container>
     </BusinessLayout>
