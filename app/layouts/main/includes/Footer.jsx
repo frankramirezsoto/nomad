@@ -1,4 +1,5 @@
 'use client'
+import Logo from "@/app/components/Logo";
 
 export default function Footer() {
   return (
@@ -7,6 +8,9 @@ export default function Footer() {
         <div className="container px-4 mx-auto">
           <div className="mx-4 grid grid-cols-1 md:grid-cols-2">
             <div className="px-4 my-4 w-full">
+              <div className="w-[125px] mb-3">
+              <Logo />
+              </div>
               <p className="text-justify">
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit.
                 Officiis, cupiditate. Neque cumque repellat, quos sit iusto

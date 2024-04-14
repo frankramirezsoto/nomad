@@ -1,10 +1,12 @@
 import Image from "next/image";
-import MainLayout from "./layouts/main/MainLayout";
+import HomeLayout from "./layouts/main/HomeLayout";
+import { Stack, Spinner } from "@chakra-ui/react";
+import { GiHeartPlus } from "react-icons/gi";
 
 export default function Home() {
   return (
-    <MainLayout>
-      <p>skg</p>
-    </MainLayout>
+    <HomeLayout>
+      <p>holii</p>
+    </HomeLayout>
   );
 }

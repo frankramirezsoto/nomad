@@ -4,6 +4,7 @@ import ItineraryCart from "./ItineraryCart.jsx";
 import AccessBtn from "./AccessBtn.jsx";
 import { useAuth } from "@/app/context/AuthContext.js";
 import UserOptionsMenu from "./UserOptionsMenu.jsx";
+import Logo from "@/app/components/Logo";
 
 export default function Header() {
   const { user } = useAuth();
@@ -12,9 +13,7 @@ export default function Header() {
     <header className="header-bg-forest text-white">
       <div className="backdrop-brightness-50 py-5 lg:py-7 ">
         <div className="container mx-auto flex justify-between items-center">
-          <div className="">
-            <h1>LOGO</h1>
-          </div>
+          <Logo />
 
           <div className="inline-flex items-center">
             <div className="me-10">

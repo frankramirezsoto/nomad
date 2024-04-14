@@ -12,9 +12,12 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Loading from "@/app/components/Loading";
 
 export default function Register() {
   const router = useRouter();
+  //Const to handle loading state
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     first_name: "",
@@ -32,6 +35,7 @@ export default function Register() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
     if (formData.password !== formData.confirmPassword) {
       toast({
         title: "Passwords do not match",
@@ -74,8 +78,10 @@ export default function Register() {
       if (response.ok) {
         // Handle successful registration
         router.push("/business/login");
+        setLoading(false);
       } else {
         const error = await response.json();
+        setLoading(false);
         toast({
           title: error.message || "An error occurred during registration",
           status: "error",
@@ -85,6 +91,7 @@ export default function Register() {
         });
       }
     } catch (error) {
+      setLoading(false);
       console.error(
         "There was a problem with the registration request:",
         error
@@ -93,14 +100,19 @@ export default function Register() {
   };
 
   return (
-    <main className="min-h-screen business-access-bg">
+    <>
+    {loading ? (
+        // Render spinner while loading
+        <Loading />
+      ) : <></> }
+      <main className="min-h-screen bg-random">
       <div className="backdrop-brightness-50">
         <div className="min-h-screen flex justify-center items-center h-100">
           <Card>
             <CardBody>
               <form onSubmit={handleSubmit} className="p-16">
                 <p className="text-xl text-gray-600 text-center">
-                  Welcome to Brand
+                  Welcome to NOMADA
                 </p>
                 <h2 className="text-2xl font-semibold text-gray-700 text-center">
                   Sign Up
@@ -170,5 +182,6 @@ export default function Register() {
         </div>
       </div>
     </main>
+    </>
   );
 }

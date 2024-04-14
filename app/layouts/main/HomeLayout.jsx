@@ -1,6 +1,6 @@
 'use client'
 import { useState, useEffect } from 'react';
-import Header from "./includes/Header";
+import HeaderHome from "./includes/HeaderHome";
 import Footer from "./includes/Footer";
 import Loading from "../../components/Loading";
 
@@ -18,7 +18,7 @@ const MainLayout = ({ children }) => {
     <>
       {isLoading ? <Loading /> : <div></div>}
       <div>
-
+        <HeaderHome></HeaderHome>
         <main>
           {children}
         </main>

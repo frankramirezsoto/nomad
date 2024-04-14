@@ -9,17 +9,20 @@ import {
 } from "@chakra-ui/react";
 import { useAuth } from "@/app/context/AuthContext";
 import { useToast } from '@chakra-ui/react'
+import Loading from "@/app/components/Loading";
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { login } = useAuth();
   const toast = useToast();
+  //Const to handle loading state
+  const [loading, setLoading] = useState(false);
 
   //Function to handle login submit
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevents the default form submission
-    
+    setLoading(true);
     try {
       //Fetches data from api
       const response = await fetch('/api/auth', {
@@ -33,9 +36,11 @@ export default function Login() {
       if (response.ok) { 
         //Converts response to Json and logs the userData using the AuthContext
         const userData = await response.json(); 
+        setLoading(false);
         login(userData.data);
       } else {
         const error = await response.json(); 
+        setLoading(false);
         toast({
           title: `${error.error}`,
           duration: 9000,
@@ -47,12 +52,18 @@ export default function Login() {
         console.error('Login failed');
       }
     } catch (error) {
+      setLoading(false);
       console.error('There was a problem with the login request:', error);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-16">
+    <>
+      {loading ? (
+        // Render spinner while loading
+        <Loading />
+      ) : <></> }
+      <form onSubmit={handleSubmit} className="p-16">
       <ModalCloseButton />
       <h2 className="text-2xl font-semibold text-gray-700 text-center">
         Brand
@@ -80,5 +91,6 @@ export default function Login() {
         </button>
       </div>
     </form>
+    </>
   );
 }

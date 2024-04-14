@@ -9,6 +9,8 @@ import {
 } from "@chakra-ui/react";
 import { useState } from 'react';
 import { useToast } from '@chakra-ui/react'
+import { useRouter } from "next/navigation";
+import Loading from "@/app/components/Loading";
 
 export default function Register() {
 
@@ -20,6 +22,10 @@ export default function Register() {
     confirmPassword: '',
   });
   const toast = useToast();
+  //Const to handle loading state
+  const [loading, setLoading] = useState(false);
+  //Router to handle redirect
+  const router = useRouter();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -53,7 +59,7 @@ export default function Register() {
   }
 
     try {
-      
+      setLoading(true);
       const response = await fetch('/api/register', {
         method: 'POST',
         headers: {
@@ -69,6 +75,8 @@ export default function Register() {
 
       if (response.ok) {
         // Handle successful registration
+        setLoading(false);
+        router.push("/");
         toast({
           title: "Registration successful. You may now log in.",
           status: "success",
@@ -78,6 +86,7 @@ export default function Register() {
         });
       } else {
         const error = await response.json();
+        setLoading(false);
         toast({
           title: error.message || "An error occurred during registration",
           status: "error",
@@ -93,11 +102,16 @@ export default function Register() {
 
 
   return (
-    <form onSubmit={handleSubmit} className="p-16">
+    <>
+    {loading ? (
+        // Render spinner while loading
+        <Loading />
+      ) : <></> }
+      <form onSubmit={handleSubmit} className="p-16">
       <div className="flex justify-end bg-teal-400">
         <ModalCloseButton />
       </div>
-      <p className="text-xl text-gray-600 text-center">Welcome to Brand</p>
+      <p className="text-xl text-gray-600 text-center">Welcome to NOMADA</p>
       <h2 className="text-2xl font-semibold text-gray-700 text-center">
         Sign Up
       </h2>
@@ -138,6 +152,7 @@ export default function Register() {
         </Button>
       </div>
     </form>
+    </>
   );
 }
 

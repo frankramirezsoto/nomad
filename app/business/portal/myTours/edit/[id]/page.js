@@ -59,7 +59,6 @@ export default function EditTour({ params }) {
 
   //Fetch the Tour Info from the DB
   useEffect(() => {
-
     const fetchTourById = async () => {
       try {
         const response = await fetch(`/api/tours/getTourById?tour_id=${tourId}`);

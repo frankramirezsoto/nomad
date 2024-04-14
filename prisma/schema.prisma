@@ -55,8 +55,8 @@ model Images {
   business_id Int?
   tour_id     Int?
   image       Bytes
-  Tour        Tour?     @relation(fields: [tour_id], references: [tour_id], onDelete: NoAction, onUpdate: NoAction, map: "Images_fk2")
   Business    Business? @relation(fields: [business_id], references: [business_id], onDelete: Cascade, map: "Images_fk1")
+  Tour        Tour?     @relation(fields: [tour_id], references: [tour_id], onDelete: Cascade, map: "Images_fk2")
 }
 
 model Itinerary {

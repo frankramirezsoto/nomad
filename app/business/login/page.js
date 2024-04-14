@@ -11,6 +11,7 @@ import {
 import { useState, useEffect } from "react";
 import { useAuth } from "@/app/context/AuthContext";
 import { useRouter } from "next/navigation";
+import Loading from "@/app/components/Loading";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -18,6 +19,8 @@ export default function Login() {
   const { loginBusiness, businessUser } = useAuth();
   const toast = useToast();
   const router = useRouter();
+  //Const to handle loading state
+  const [loading, setLoading] = useState(false);
 
   if (businessUser) {
     router.push("/business/portal/myBusinesses");
@@ -25,7 +28,7 @@ export default function Login() {
   //Function to handle login submit
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevents the default form submission
-
+    setLoading(true);
     try {
       //Fetches data from api
       const response = await fetch("/api/authbusiness", {
@@ -39,9 +42,11 @@ export default function Login() {
       if (response.ok) {
         //Converts response to Json and logs the userData using the AuthContext
         const userData = await response.json();
+        setLoading(false);
         loginBusiness(userData.data);
       } else {
         const error = await response.json();
+        setLoading(false);
         toast({
           title: `${error.error}`,
           duration: 9000,
@@ -53,12 +58,18 @@ export default function Login() {
         console.error("Login failed");
       }
     } catch (error) {
+      setLoading(false);
       console.error("There was a problem with the login request:", error);
     }
   };
 
   return (
-    <main className="min-h-screen business-access-bg">
+    <>
+    {loading ? (
+        // Render spinner while loading
+        <Loading />
+      ) : <></> }
+    <main className="min-h-screen bg-random">
       <div className="backdrop-brightness-50">
         <div className="min-h-screen flex justify-center items-center h-100">
           <Card>
@@ -98,5 +109,6 @@ export default function Login() {
         </div>
       </div>
     </main>
+    </>
   );
 }

@@ -17,7 +17,10 @@ const SidebarContent = () => {
   const router = useRouter()
   return (
     <VStack mt={12}>
-      <Button w="100%">Account</Button>
+      <Button 
+      w="100%"
+      onClick={() => router.push("/business/portal/account")}
+      >Account</Button>
       <Button
         w="100%"
         onClick={() => router.push("/business/portal/myBusinesses")}
@@ -38,7 +41,7 @@ const Sidebar = ({ isOpen, variant, onClose }) => {
       w="200px"
       top={0}
       h="100%"
-      bg="#171923"
+      className='bg-teal-700'
     >
       <SidebarContent onClick={onClose} />
     </Box>

@@ -8,9 +8,9 @@ export async function POST(req, res) {
 
   try {
     const { email, password, first_name, last_name } = request;
-    console.log(request)
+
     //Check if user already exists
-    const existingUser = await prisma.user.findUnique({
+    const existingUser = await prisma.businessUser.findUnique({
       where: { email },
     });
     console.log(existingUser);
@@ -24,6 +24,7 @@ export async function POST(req, res) {
     // Create user
     const user = await prisma.businessUser.create({
       data: {
+        b_user_id:0,
         email,
         password,
         first_name,
@@ -36,6 +37,7 @@ export async function POST(req, res) {
     const { password: _, ...userInfo } = user;
     return NextResponse.json({ data: userInfo }, { status: 200 });
   } catch (error) {
+    console.log(error)
     return NextResponse.json({ message: "Something went wrong"},{status:500});
   }
 }

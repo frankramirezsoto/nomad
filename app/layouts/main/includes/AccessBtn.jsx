@@ -10,7 +10,7 @@ function AccessBtn(props) {
     return(
         <>
             <button
-                className="py-2 px-6 bg-teal-700 hover:bg-teal-800 rounded-full me-3"
+                className="py-2 px-6 bg-teal-600 hover:bg-teal-800 rounded-full me-3"
                 onClick={onOpen}
             >{props.children}</button>
 
@@ -27,7 +27,7 @@ function AccessBtn(props) {
     return(
         <>
             <button
-                className="py-2 px-6 bg-green-700 hover:bg-green-800 rounded-full"
+                className="py-2 px-6 bg-green-600 hover:bg-green-800 rounded-full"
                 onClick={onOpen}
             >{props.children}</button>
 

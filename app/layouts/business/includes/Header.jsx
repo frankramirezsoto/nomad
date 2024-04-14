@@ -2,10 +2,11 @@
 
 import { Box, Center, IconButton, Text, Flex } from '@chakra-ui/react'
 import { ChevronRightIcon } from '@chakra-ui/icons'
+import Logo from "@/app/components/Logo";
 
 const Header = ({ showSidebarButton = true, onShowSidebar }) => {
   return (
-    <Flex bg="#171923" p={4} color="white" justifyContent="center">
+    <Flex className='bg-teal-700' p={4} color="white" justifyContent="end">
       <Box flex="1">
         {showSidebarButton && (
           <IconButton
@@ -16,10 +17,7 @@ const Header = ({ showSidebarButton = true, onShowSidebar }) => {
           />
         )}
       </Box>
-      <Center flex="1" h="40px">
-        <Text fontSize="xl">LOGO</Text>
-      </Center>
-      <Box flex="1" />
+      <Logo />
     </Flex>
   )
 }
