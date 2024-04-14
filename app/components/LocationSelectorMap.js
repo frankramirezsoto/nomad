@@ -5,10 +5,10 @@ import { MapContainer, TileLayer, Marker, useMapEvents, useMap } from 'react-lea
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
-const LocationSelectorMap = ({ onLocationSelect, initialLat, initialLng }) => {
+const LocationSelectorMap = ({ onLocationSelect = () => {}, initialLat, initialLng }) => {
   const [markerPosition, setMarkerPosition] = useState(null);
-  // Define the icon with correct paths
-const customMarkerIcon = new L.Icon({
+
+  const customMarkerIcon = new L.Icon({
     iconUrl: '/assets/images/marker-icon.png',
     iconRetinaUrl: '/assets/images/marker-icon-2x.png',
     shadowUrl: '/assets/images/marker-shadow.png',
@@ -19,22 +19,21 @@ const customMarkerIcon = new L.Icon({
   });
 
   useEffect(() => {
-    // Function to set the marker to the user's current location
     const setUserLocation = () => {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
           setMarkerPosition([latitude, longitude]);
-          onLocationSelect(latitude, longitude); // Update the formData with user's location
+          if (onLocationSelect) {
+            onLocationSelect(latitude, longitude);
+          }
         },
         () => {
-          // Handle error or fallback if permission is denied
           console.log('Unable to retrieve your location');
         }
       );
     };
 
-    // If initial coordinates are provided, use them; otherwise, try to use the user's location
     if (initialLat && initialLng) {
       setMarkerPosition([initialLat, initialLng]);
     } else {
@@ -42,7 +41,7 @@ const customMarkerIcon = new L.Icon({
     }
   }, [initialLat, initialLng, onLocationSelect]);
 
-  function LocationMarker({ position, onLocationSelect }) {
+  function LocationMarker({ position }) {
     const map = useMap();
   
     useEffect(() => {
@@ -54,7 +53,9 @@ const customMarkerIcon = new L.Icon({
     useMapEvents({
       click(e) {
         const { lat, lng } = e.latlng;
-        onLocationSelect(lat, lng);
+        if (onLocationSelect) {
+          onLocationSelect(lat, lng);
+        }
       },
     });
   
@@ -66,7 +67,7 @@ const customMarkerIcon = new L.Icon({
   return (
     <MapContainer center={markerPosition || [10.0159, -84.2142]} zoom={13} style={{ height: '400px', width: '100%' }}>
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-      <LocationMarker position={markerPosition} onLocationSelect={onLocationSelect} />
+      <LocationMarker position={markerPosition} />
     </MapContainer>
   );
 };
