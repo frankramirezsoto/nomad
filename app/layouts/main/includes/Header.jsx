@@ -32,6 +32,9 @@ export default function Header() {
           </div>
         </div>
       </div>
+      <div className="h-4 bg-teal-700">
+
+      </div>
     </header>
   );
 }

@@ -66,9 +66,8 @@ export default function Login() {
       <form onSubmit={handleSubmit} className="p-16">
       <ModalCloseButton />
       <h2 className="text-2xl font-semibold text-gray-700 text-center">
-        Brand
+        Welcome back!
       </h2>
-      <p className="text-xl text-gray-600 text-center">Welcome back!</p>
 
       <div className="mt-4">
         <FormControl>
