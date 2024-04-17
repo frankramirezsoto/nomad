@@ -322,7 +322,7 @@ export default function FormBusiness({
                 </InputGroup>
 
                 <InputGroup>
-                  <InputLeftAddon>https://</InputLeftAddon>
+                  <InputLeftAddon>Website:</InputLeftAddon>
                   <Input
                     placeholder="www.my-website-or-social-media-link.com"
                     id="link"

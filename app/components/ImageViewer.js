@@ -27,7 +27,7 @@ const ImageViewer = ({ imageUrls }) => {  // Correctly destructure imageUrls fro
     <section className="mx-auto max-w-2xl">
       <div className="shadow-2xl relative">
         {image ? (
-            <div className='max-h-96 min-h-96 overflow-hidden'>
+            <div className='max-h-[400px] min-h-[400px] overflow-hidden'>
                 <img src={image} alt="Image" className='object-none object-center'/>
             </div>
         ): null}

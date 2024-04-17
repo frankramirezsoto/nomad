@@ -16,6 +16,7 @@
     "@prisma/client": "^5.10.2",
     "framer-motion": "^11.0.8",
     "leaflet": "^1.9.4",
+    "lodash.debounce": "^4.0.8",
     "next": "14.1.2",
     "prisma": "^5.10.2",
     "react": "^18",

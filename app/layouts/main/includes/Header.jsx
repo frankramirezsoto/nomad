@@ -10,7 +10,7 @@ export default function Header() {
   const { user } = useAuth();
 
   return (
-    <header className="header-bg-forest text-white">
+    <header className="bg-home text-white">
       <div className="backdrop-brightness-50 py-5 lg:py-7 ">
         <div className="container mx-auto flex justify-between items-center">
           <Logo />
