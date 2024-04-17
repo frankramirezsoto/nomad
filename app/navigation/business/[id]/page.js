@@ -53,7 +53,6 @@ export default function Business({ params }) {
 
   //Hook to save the paths of the saved images
   const [images, setImages] = useState([]);
-  console.log(images);
   //Const to handle loading state
   const [loading, setLoading] = useState(true);
 

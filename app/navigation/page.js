@@ -5,7 +5,9 @@ import BusinessAndTourSearch from "./components/BusinessAndTourSearch"
 export default function Navigation(){
     return(
         <MainLayout>
-            <BusinessAndTourSearch></BusinessAndTourSearch>
+            <div className="container mx-auto my-10">
+                <BusinessAndTourSearch ></BusinessAndTourSearch>
+            </div>
         </MainLayout>
     )
 }
