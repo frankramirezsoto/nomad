@@ -2,13 +2,12 @@
 import { PrismaClient } from '@prisma/client';
 import { NextResponse } from 'next/server';
 
-const prisma = new PrismaClient();
-
 export async function POST(req) {
+  const prisma = new PrismaClient();
     try {
         const request = await req.json()
         console.log(request);
-        if (request.discount_end && discount_end) {
+        if (request.discount_end && request.discount_start) {
           request.discount_start = new Date(request.discount_start).toISOString();
           request.discount_end = new Date(request.discount_end).toISOString();
         } else {

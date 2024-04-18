@@ -1,9 +1,8 @@
 import { PrismaClient } from '@prisma/client';
 import { NextResponse } from 'next/server';
 
-const prisma = new PrismaClient();
-
 export async function GET(req) {
+  const prisma = new PrismaClient();
   //Gets the id by the searchParams
   const searchParams = new URL(req.url).searchParams;
   const tour_id = searchParams.get('tour_id');
@@ -20,7 +19,7 @@ export async function GET(req) {
       },
     });
     await prisma.$disconnect();
-    
+
     return NextResponse.json({ data: tour }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to fetch business' }, { status: 500 });

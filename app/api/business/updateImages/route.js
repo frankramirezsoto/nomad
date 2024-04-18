@@ -1,9 +1,8 @@
 import { PrismaClient } from '@prisma/client';
 import { NextResponse } from 'next/server';
 
-const prisma = new PrismaClient();
-
 export async function PUT(req) {
+  const prisma = new PrismaClient();
   const { business_id, tour_id, images } = await req.json();
 
   try {

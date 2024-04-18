@@ -3,9 +3,8 @@
 import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
 
-const prisma = new PrismaClient();
-
 export async function PUT(req) {
+  const prisma = new PrismaClient();
   const request = await req.json();
   const { Images, Review, ...updateData } = request;
 

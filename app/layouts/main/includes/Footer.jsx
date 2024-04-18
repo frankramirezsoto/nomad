@@ -59,7 +59,7 @@ export default function Footer() {
                 <ul className="leading-8">
                   <li>
                     <a href="/business/register" className="hover:text-teal-400">
-                    Register your Business
+                    Register a Business Account
                     </a>
                   </li>
                   <li>

@@ -1,9 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
 
-const prisma = new PrismaClient();
-
 export async function PUT(req) {
+  const prisma = new PrismaClient();
   const request = await req.json();
   // Convert discount_start and discount_end to ISO-8601 format if they exist
   request.discount_start ? request.discount_start = new Date(request.discount_start).toISOString() : request.discount_start = null;

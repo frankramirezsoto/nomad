@@ -2,12 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import debounce from "lodash.debounce";
-import {
-  Box,
-  Card,
-  Skeleton,
-  Stack,
-} from "@chakra-ui/react";
+import { Box, Card, Skeleton, Stack } from "@chakra-ui/react";
 import { IoSearchCircleSharp } from "react-icons/io5";
 import BusinessCard from "./BusinessCard";
 import TourCard from "./TourCard";
@@ -16,7 +11,8 @@ const BusinessAndToursSearch = ({ initialQuery = "" }) => {
   const [businesses, setBusinesses] = useState([]);
   const [tours, setTours] = useState([]);
   const [searchQuery, setSearchQuery] = useState(initialQuery);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingTours, setIsLoadingTours] = useState(true);
+  const [isLoadingBusinesses, setIsLoadingBusinesses] = useState(true);
   const [businessTypes, setBusinessTypes] = useState({});
   const [showTours, setShowTours] = useState(true);
   const [priceLimits, setPriceLimits] = useState({ min: 0, max: 1000 });
@@ -30,32 +26,38 @@ const BusinessAndToursSearch = ({ initialQuery = "" }) => {
   }, []);
 
   const fetchData = async () => {
-    setIsLoading(true);
     try {
-      const businessResponse = await fetch(
-        "/api/business/getAllBusinesses"
-      ).then((response) => response.json());
       const tourResponse = await fetch("/api/tours/getAllTours").then(
         (response) => response.json()
       );
-
-      if (businessResponse.data && tourResponse.data) {
-        setBusinesses(businessResponse.data);
+      if (tourResponse.data) {
         setTours(tourResponse.data);
-        extractAndSetBusinessTypes(businessResponse.data);
         // Update initial price range based on fetched data if necessary
         const maxPrice = Math.max(
           ...tourResponse.data.map((tour) => tour.price_person)
         );
         setPriceLimits({ min: 0, max: maxPrice });
         setSelectedPriceRange({ min: 0, max: maxPrice });
+      }
+      setIsLoadingTours(false);
+      const businessResponse = await fetch(
+        "/api/business/getAllBusinesses"
+      ).then((response) => response.json());
+      if (businessResponse.data) {
+        setBusinesses(businessResponse.data);
+      }
+      setIsLoadingBusinesses(false);
+
+      if (businessResponse.data && tourResponse.data) {
+        extractAndSetBusinessTypes(businessResponse.data);
       } else {
         console.error("Failed to fetch data");
       }
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-    setIsLoading(false);
+    setIsLoadingBusinesses(false);
+    setIsLoadingTours(false);
   };
 
   const extractAndSetBusinessTypes = (businessData) => {
@@ -137,7 +139,7 @@ const BusinessAndToursSearch = ({ initialQuery = "" }) => {
             className="ps-16 pe-5 rounded-full w-full h-16 bg-transparent py-2 outline-none border-2 border-gray-100 shadow-md hover:outline-none focus:ring-teal-400 focus:border-teal-200"
           />
         </div>
-        {isLoading ? (
+        {isLoadingTours && isLoadingBusinesses ? (
           <Stack mt={30}>
             <Skeleton height="20px" />
             <Skeleton height="20px" />
@@ -205,46 +207,79 @@ const BusinessAndToursSearch = ({ initialQuery = "" }) => {
         )}
       </Card>
 
-      {isLoading ? (
+      {isLoadingTours ? (
         <div className="col-span-3 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-            <Skeleton className="min-h-72" sx={{ transition: "transform 0.3s ease-in-out" }}
-          _hover={{ transform: "scale(1.1)" }}
+          <Skeleton
+            className="min-h-72"
+            sx={{ transition: "transform 0.3s ease-in-out" }}
+            _hover={{ transform: "scale(1.1)" }}
           />
-          <Skeleton className="min-h-72" sx={{ transition: "transform 0.3s ease-in-out" }}
-          _hover={{ transform: "scale(1.1)" }}
+          <Skeleton
+            className="min-h-72"
+            sx={{ transition: "transform 0.3s ease-in-out" }}
+            _hover={{ transform: "scale(1.1)" }}
           />
-          <Skeleton className="min-h-72" sx={{ transition: "transform 0.3s ease-in-out" }}
-          _hover={{ transform: "scale(1.1)" }}
+          <Skeleton
+            className="min-h-72"
+            sx={{ transition: "transform 0.3s ease-in-out" }}
+            _hover={{ transform: "scale(1.1)" }}
           />
-          <Skeleton className="min-h-72" sx={{ transition: "transform 0.3s ease-in-out" }}
-          _hover={{ transform: "scale(1.1)" }}
+          <Skeleton
+            className="min-h-72"
+            sx={{ transition: "transform 0.3s ease-in-out" }}
+            _hover={{ transform: "scale(1.1)" }}
           />
-          <Skeleton className="min-h-72" sx={{ transition: "transform 0.3s ease-in-out" }}
-          _hover={{ transform: "scale(1.1)" }}
-          />
-
         </div>
       ) : (
         <Box className="col-span-3">
-            {showTours && !(filteredTours.length === 0) && (
+          {showTours && !(filteredTours.length === 0) && (
             <div className="mb-7">
-              <h2 className="text-2xl md:text-xl pl-2 my-2 mb-5 border-l-4  font-bold border-teal-400  dark:text-gray-200">Tours</h2>
+              <h2 className="text-2xl md:text-xl pl-2 my-2 mb-5 border-l-4  font-bold border-teal-400  dark:text-gray-200">
+                Tours
+              </h2>
               <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5">
-              {filteredTours.map((tour) => (
-                <TourCard tour={tour}/>
-              ))}
+                {filteredTours.map((tour) => (
+                  <TourCard tour={tour} />
+                ))}
               </div>
             </div>
           )}
-          {!(filteredBusinesses.length === 0) && (
-            <div>
-              <h2 className="text-2xl md:text-xl pl-2 my-2 mb-5 border-l-4  font-bold border-teal-400  dark:text-gray-200">Hotels, Restaurants & Others</h2>
+          {!isLoadingBusinesses ? (
+            !(filteredBusinesses.length === 0) && (
+              <div>
+                <h2 className="text-2xl md:text-xl pl-2 my-2 mb-5 border-l-4  font-bold border-teal-400  dark:text-gray-200">
+                  Hotels, Restaurants & Others
+                </h2>
 
-              <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5">
-              {filteredBusinesses.map((business) => (
-                <BusinessCard business={business}></BusinessCard>
-              ))}
+                <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5">
+                  {filteredBusinesses.map((business) => (
+                    <BusinessCard business={business}></BusinessCard>
+                  ))}
+                </div>
               </div>
+            )
+          ) : (
+            <div className="col-span-3 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+              <Skeleton
+                className="min-h-72"
+                sx={{ transition: "transform 0.3s ease-in-out" }}
+                _hover={{ transform: "scale(1.1)" }}
+              />
+              <Skeleton
+                className="min-h-72"
+                sx={{ transition: "transform 0.3s ease-in-out" }}
+                _hover={{ transform: "scale(1.1)" }}
+              />
+              <Skeleton
+                className="min-h-72"
+                sx={{ transition: "transform 0.3s ease-in-out" }}
+                _hover={{ transform: "scale(1.1)" }}
+              />
+              <Skeleton
+                className="min-h-72"
+                sx={{ transition: "transform 0.3s ease-in-out" }}
+                _hover={{ transform: "scale(1.1)" }}
+              />
             </div>
           )}
         </Box>

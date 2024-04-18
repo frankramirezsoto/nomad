@@ -1,9 +1,9 @@
 import { PrismaClient } from '@prisma/client';
 import { NextResponse } from 'next/server';
 
-const prisma = new PrismaClient();
-
 export async function GET(req) {
+    const prisma = new PrismaClient();
+
     try {
         // Fetch all businesses and include related images and types
         const businesses = await prisma.business.findMany({
