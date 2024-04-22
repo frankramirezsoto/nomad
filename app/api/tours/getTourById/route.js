@@ -1,8 +1,7 @@
-import { PrismaClient } from '@prisma/client';
+import prisma from "../../prismaClient/prismaClient"
 import { NextResponse } from 'next/server';
 
 export async function GET(req) {
-  const prisma = new PrismaClient();
   //Gets the id by the searchParams
   const searchParams = new URL(req.url).searchParams;
   const tour_id = searchParams.get('tour_id');
@@ -14,8 +13,12 @@ export async function GET(req) {
         tour_id: parseInt(tour_id), 
       },
       include: {
-        Images: true, // Include related images
-        Review: true, // Include related reviews
+        Images: true, 
+        Review: {
+          include: {
+              User: true, 
+          },
+        }
       },
     });
     await prisma.$disconnect();

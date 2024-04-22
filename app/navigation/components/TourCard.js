@@ -32,8 +32,8 @@ export default function TourCard({tour}){
     };
 
     // Calculate tour rating if reviews exist
-    if (tour.Reviews) {
-        tourRating = calculateAverageRating(tour.Reviews);
+    if (tour.Review) {
+        tourRating = calculateAverageRating(tour.Review);
     }
     //Function to calculate discounted price
     function calculateDiscountedPrice(price, discountPercent) {
@@ -54,7 +54,7 @@ export default function TourCard({tour}){
           _hover={{ transform: "scale(1.1)", cursor:"pointer" }}
           >
         <Box className='min-h-52 max-h-52 overflow-hidden' style={{backgroundImage:`url(${tourImage})`,backgroundPosition:"center",backgroundSize:"cover"}} />
-        <Badge rounded="full" px="2" fontSize="0.8em" colorScheme="green" position="absolute" top={2} right={2}>{tour.discount ? `DISCOUNT: ${tour.discount}%`:null}</Badge>
+        <Badge px="2" fontSize="0.8em" colorScheme="green" position="absolute" top={0} right={0}>{tour.discount ? `DISCOUNT: ${tour.discount}%`:null}</Badge>
         <Box p="6">
         <Flex justify="start" alignItems="center" className='text-xs text-gray-500' mt={2}><span><FaLocationDot className='text-gray-500 me-2'/></span> <span>{tour.canton}, {tour.province}</span></Flex>
             <Tooltip label={tour.name}><Text fontSize={17} fontWeight="bold" minH={50} maxH={50} noOfLines={2}>{tour.name}</Text></Tooltip>

@@ -1,22 +1,22 @@
-import { PrismaClient } from '@prisma/client';
+import prisma from "../../prismaClient/prismaClient"
 import { NextResponse } from 'next/server';
 
 export async function GET(req) {
-    const prisma = new PrismaClient();
-
     try {
         // Fetch all businesses and include related images and types
         const businesses = await prisma.business.findMany({
             include: {
-                Images: true, // Include related images
-                BusinessTypes: true, // Include related business types
+                Images: {
+                    take: 1 
+                }, 
+                BusinessTypes: true,
                 Review: true,
             },
         });
-        await prisma.$disconnect();
 
         return NextResponse.json({data: businesses}, { status: 200 });
     } catch (error) {
+        console.log(error)
         return NextResponse.json({error: 'Failed to fetch businesses'}, { status: 500 });
     }
 }

@@ -7,8 +7,8 @@ export default function Logo(){
 
     return (
         <button onClick={() => router.push("/")} className="border border-2 border-white p-2 px-3 flex items-center">
-              <FaHiking size={20}/>
-              <h1 className="font-extrabold ms-2">NOMADA</h1>
+              <FaHiking size={20} color="white"/>
+              <h1 className="font-extrabold ms-2 text-white">NOMADA</h1>
         </button>
     )
 }

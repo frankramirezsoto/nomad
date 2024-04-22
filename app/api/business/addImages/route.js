@@ -1,9 +1,8 @@
 // pages/api/images/addImage.js
-import { PrismaClient } from '@prisma/client';
+import prisma from "../../prismaClient/prismaClient"
 import { NextResponse } from 'next/server';
 
 export async function POST(req) {
-  const prisma = new PrismaClient();
     const request = await req.json()
     const {business_id, tour_id, image} = request;
     try {

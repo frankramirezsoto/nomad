@@ -1,10 +1,7 @@
-// pages/api/business/deleteBusiness.js
-
-import { PrismaClient } from '@prisma/client';
+import prisma from "../../prismaClient/prismaClient"
 import { NextResponse } from 'next/server';
 
 export async function DELETE(req) {
-  const prisma = new PrismaClient();
   const { business_id } = await req.json();
     console.log(business_id)
   try {

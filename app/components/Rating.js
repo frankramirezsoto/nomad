@@ -24,7 +24,7 @@ export default function Rating({ rating, numReviews }) {
             return <BsStar key={i} style={{ marginLeft: '1' }} className='text-gray-300' />
           })}
         <Box as="span" ml="2" color="gray.600" fontSize="sm">
-          {(numReviews>0)? `${numReviews} review${numReviews > 1 && 's'}`:"0 reviews"}
+          {(numReviews>0)? `${numReviews} reviews` :"0 reviews"}
         </Box>
       </Box>
     )

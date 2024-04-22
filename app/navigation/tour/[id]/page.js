@@ -13,7 +13,7 @@ import {
   List,
   ListItem,
   ListIcon,
-  Button,
+  Flex,
   Container,
 } from "@chakra-ui/react";
 import ImageViewer from "@/app/components/ImageViewer";
@@ -24,18 +24,16 @@ import { MdAccessTimeFilled } from "react-icons/md";
 import { FaPhone } from "react-icons/fa6";
 import Reviews from "../../components/Reviews";
 
-export default function Business({ params }) {
-  //Gets Business Id from param
-  const businessId = params.id;
+export default function Tour({ params }) {
+  //Gets Tour Id from param
+  const tourId = params.id;
   //Gets Router to be used
   const router = useRouter();
   //Gets toast to be used
   const toast = useToast();
-  //This hook is used to stored the business obtained by the DB
-  const [business, setBusiness] = useState({
+  //This hook is used to stored the tour obtained by the DB
+  const [tour, setTour] = useState({
     b_user_id: "",
-    b_type_id: "",
-    business_tax_id: "",
     name: "",
     short_description: "",
     full_description: "",
@@ -45,10 +43,13 @@ export default function Business({ params }) {
     province: "",
     latitude: "",
     longitude: "",
+    price_person:"",
+    discount:"",
+    discount_start:"",
+    discount_end:"",
     days_operation: "0000000",
     operates_from: "",
     operates_to: "",
-    link: "",
     phone_number: "",
   });
 
@@ -56,17 +57,16 @@ export default function Business({ params }) {
   const [images, setImages] = useState([]);
   //Const to handle loading state
   const [loading, setLoading] = useState(true);
-  console.log(business);
 
-  //Fetch the Business Info from the DB
+  //Fetch the Tour Info from the DB
   useEffect(() => {
-    const fetchBusinessById = async () => {
+    const fetchTourById = async () => {
       try {
         const response = await fetch(
-          `/api/business/getBusinessById?business_id=${businessId}`
+          `/api/tours/getTourById?tour_id=${tourId}`
         );
         const data = await response.json();
-        setBusiness(data.data);
+        setTour(data.data);
         var imageUrls = data.data.Images.map((image) => {
           return `${Buffer.from(image.image.data)
             .toString("base64")
@@ -78,14 +78,14 @@ export default function Business({ params }) {
         setLoading(false);
       } catch (error) {
         setLoading(false);
-        console.error("Error fetching business:", error);
+        console.error("Error fetching tour:", error);
       }
     };
 
-    if (businessId) {
-      fetchBusinessById();
+    if (tourId) {
+      fetchTourById();
     }
-  }, [businessId]);
+  }, [tourId]);
 
   function describeDays(days) {
     const dayNames = [
@@ -161,10 +161,10 @@ export default function Business({ params }) {
           >
             <Box className="p-5 bg-white rounded-lg" maxWidth="75%">
               <Text className="text-center text-teal-700 mb-6" fontSize={30} fontWeight="bold">
-                {business ? business.name : null}
+                {tour ? tour.name : null}
               </Text>
               <Text className="text-center text-teal-700" fontSize={15}>
-                {business ? business.short_description : null}
+                {tour ? tour.short_description : null}
               </Text>
             </Box>
           </Box>
@@ -189,40 +189,40 @@ export default function Business({ params }) {
               />
             ) : (
               <Box py={30}>
-                <Text mb={3}>{business ? business.full_description : null}</Text>
+                <Text mb={3}>{tour ? tour.full_description : null}</Text>
               </Box>
             )}
           </Box>
           <Box>
             <Skeleton isLoaded={!loading} mb={3}>
               <LocationSelectorMap
-                initialLat={business ? business.latitude : null}
-                initialLng={business ? business.longitude : null}
+                initialLat={tour ? tour.latitude : null}
+                initialLng={tour ? tour.longitude : null}
                 className="my-3"
               />
             </Skeleton>
             <Skeleton isLoaded={!loading} mb={3}>
               <Divider mb={3} />
 
-              {business ? (
+              {tour ? (
                 <List spacing={3}>
                 <ListItem>
                   <ListIcon as={FaLocationDot} color="teal.500" />
-                  {business.address}, {business.district}, {business.canton},{" "}
-                  {business.province}, Costa Rica
+                  {tour.address}, {tour.district}, {tour.canton},{" "}
+                  {tour.province}, Costa Rica
                 </ListItem>
                 <ListItem>
                   <ListIcon as={FaCalendarCheck} color="teal.500" />
-                  Operates {describeDays(business.days_operation)}
+                  Operates {describeDays(tour.days_operation)}
                 </ListItem>
                 <ListItem>
                   <ListIcon as={MdAccessTimeFilled} color="teal.500" />
-                  Open from {business.operates_from} to {business.operates_to}
+                  Open from {tour.operates_from} to {tour.operates_to}
                 </ListItem>
-                {business.phone_number ? (
+                {tour.phone_number ? (
                   <ListItem>
                     <ListIcon as={FaPhone} color="teal.500" />
-                    {business.phone_number}
+                    {tour.phone_number}
                   </ListItem>
                 ) : null}
               </List>
@@ -230,14 +230,7 @@ export default function Business({ params }) {
             </Skeleton>
             <Skeleton isLoaded={!loading} mb={3}>
               <Box w="full" mt={5}>
-                <a
-                  href={business ? `https://${business.link}`:null}
-                  target="_blank"
-                >
-                    <Button rounded="full" colorScheme="teal" w="full" py={7} fontSize="lg">
-                    Visit us now!
-                    </Button>
-                </a>
+                
               </Box>
             </Skeleton>
           </Box>
@@ -247,11 +240,16 @@ export default function Business({ params }) {
           {loading ? (
             <></>
           ) : (
-            <Reviews
-              reviews={business.Review}
-              id={businessId}
-              type="business"
+            <>
+              <Flex justifyContent="center">
+              <Text fontWeight="bold" fontSize={25} mb={3} className="border-b-4 border-teal-500">Reviews</Text>
+              </Flex>
+              <Reviews
+              reviews={tour.Review}
+              id={tourId}
+              type="tour"
             />
+            </>
           )}
         </Box>
       </Container>

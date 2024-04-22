@@ -12,9 +12,13 @@ import {
   PopoverAnchor,
   Button,
   Portal,
+  Box,
+  Text,
 } from "@chakra-ui/react";
 import { useAuth } from "@/app/context/AuthContext";
 import { FaHiking } from "react-icons/fa";
+import Lottie from "lottie-react";
+import walkAnimation from "@/public/assets/images/animation-walk.json"
 
 function ItineraryCart() {
   const { user } = useAuth();
@@ -31,7 +35,10 @@ function ItineraryCart() {
           <PopoverContent>
           <PopoverArrow />
           <PopoverBody>
-            <p>Login to create an itinerary at the best places in Costa Rica!</p>
+            <Box>
+              <Lottie animationData={walkAnimation} className="h-[150px]"/>
+            </Box>
+            <Text align="center" fontWeight="bold" p={3}>Login now to create an itinerary at the best places in Costa Rica!</Text>
           </PopoverBody>
         </PopoverContent>
         :

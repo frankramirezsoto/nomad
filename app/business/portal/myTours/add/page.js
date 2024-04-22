@@ -92,7 +92,7 @@ export default function AddTour() {
       } else {
         setLoading(false);
         toast({
-          title: response.error,
+          title: "Failed to add tour.",
           duration: 9000,
           isClosable: true,
           status: "error",

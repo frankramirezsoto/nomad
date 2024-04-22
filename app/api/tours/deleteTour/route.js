@@ -1,10 +1,7 @@
 // pages/api/tour/deleteBusiness.js
-
-import { PrismaClient } from '@prisma/client';
 import { NextResponse } from 'next/server';
 
 export async function DELETE(req) {
-  const prisma = new PrismaClient();
   const { tour_id } = await req.json();
 
   try {

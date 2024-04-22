@@ -1,10 +1,9 @@
 // pages/api/business/updateBusiness.js
 
-import { PrismaClient } from "@prisma/client";
+import prisma from "../../prismaClient/prismaClient"
 import { NextResponse } from "next/server";
 
 export async function PUT(req) {
-  const prisma = new PrismaClient();
   const request = await req.json();
   const { Images, Review, ...updateData } = request;
 
