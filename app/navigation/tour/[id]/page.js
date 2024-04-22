@@ -15,14 +15,31 @@ import {
   ListIcon,
   Flex,
   Container,
+  Card,
+  CardBody,
+  InputGroup,
+  Input,
+  InputLeftElement,
+  FormControl,
+  FormLabel,
+  Button,
 } from "@chakra-ui/react";
 import ImageViewer from "@/app/components/ImageViewer";
-import LocationSelectorMap from "@/app/components/LocationSelectorMap";
+// import LocationSelectorMap from "@/app/components/LocationSelectorMap";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaCalendarCheck } from "react-icons/fa";
 import { MdAccessTimeFilled } from "react-icons/md";
 import { FaPhone } from "react-icons/fa6";
 import Reviews from "../../components/Reviews";
+import { IoTimeSharp } from "react-icons/io5";
+import { FaHiking } from "react-icons/fa";
+import { useAuth } from "@/app/context/AuthContext";
+import AccessBtn from "@/app/layouts/main/includes/AccessBtn";
+import dynamic from 'next/dynamic';
+
+const LocationSelectorMap = dynamic(() => import('./LocationSelectorMap'), {
+  ssr: false
+});
 
 export default function Tour({ params }) {
   //Gets Tour Id from param
@@ -31,6 +48,8 @@ export default function Tour({ params }) {
   const router = useRouter();
   //Gets toast to be used
   const toast = useToast();
+  //Gets user if logged
+  const { user } = useAuth();
   //This hook is used to stored the tour obtained by the DB
   const [tour, setTour] = useState({
     b_user_id: "",
@@ -43,10 +62,10 @@ export default function Tour({ params }) {
     province: "",
     latitude: "",
     longitude: "",
-    price_person:"",
-    discount:"",
-    discount_start:"",
-    discount_end:"",
+    price_person: "",
+    discount: "",
+    discount_start: "",
+    discount_end: "",
     days_operation: "0000000",
     operates_from: "",
     operates_to: "",
@@ -57,6 +76,58 @@ export default function Tour({ params }) {
   const [images, setImages] = useState([]);
   //Const to handle loading state
   const [loading, setLoading] = useState(true);
+
+  //States for the Itinerary & Reservation fields
+  const [tourDateTime, setTourDateTime] = useState("");
+  const [assistants, setAssistants] = useState(1);
+
+  //Function to post add Itinerary
+  const handleAddSubmit = async (event) => {
+    event.preventDefault();
+    const itineraryData = {
+      user_id: user.user_id,
+      tour_id: tourId,
+      tour_datetime: tourDateTime,
+      assistants: assistants,
+    };
+
+    try {
+      const response = await fetch("/api/itinerary/addItineraryItem", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(itineraryData),
+      });
+
+      if (!response.ok) {
+        toast({
+          title: `Must select a date, time and number of assistants`,
+          duration: 9000,
+          isClosable: true,
+          status: "error",
+          position: "top-right",
+        });
+      } else {
+        toast({
+          title: `We hope you enjoy ${tour.name}!`,
+          duration: 9000,
+          isClosable: true,
+          status: "success",
+          position: "top-right",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: `Failed to add item to the itinerary.`,
+        duration: 9000,
+        isClosable: true,
+        status: "error",
+        position: "top-right",
+      });
+      throw error;
+    }
+  };
 
   //Fetch the Tour Info from the DB
   useEffect(() => {
@@ -160,7 +231,11 @@ export default function Tour({ params }) {
             justifyContent="center"
           >
             <Box className="p-5 bg-white rounded-lg" maxWidth="75%">
-              <Text className="text-center text-teal-700 mb-6" fontSize={30} fontWeight="bold">
+              <Text
+                className="text-center text-teal-700 mb-6"
+                fontSize={30}
+                fontWeight="bold"
+              >
                 {tour ? tour.name : null}
               </Text>
               <Text className="text-center text-teal-700" fontSize={15}>
@@ -206,31 +281,115 @@ export default function Tour({ params }) {
 
               {tour ? (
                 <List spacing={3}>
-                <ListItem>
-                  <ListIcon as={FaLocationDot} color="teal.500" />
-                  {tour.address}, {tour.district}, {tour.canton},{" "}
-                  {tour.province}, Costa Rica
-                </ListItem>
-                <ListItem>
-                  <ListIcon as={FaCalendarCheck} color="teal.500" />
-                  Operates {describeDays(tour.days_operation)}
-                </ListItem>
-                <ListItem>
-                  <ListIcon as={MdAccessTimeFilled} color="teal.500" />
-                  Open from {tour.operates_from} to {tour.operates_to}
-                </ListItem>
-                {tour.phone_number ? (
                   <ListItem>
-                    <ListIcon as={FaPhone} color="teal.500" />
-                    {tour.phone_number}
+                    <ListIcon as={FaLocationDot} color="teal.500" />
+                    {tour.address}, {tour.district}, {tour.canton},{" "}
+                    {tour.province}, Costa Rica
                   </ListItem>
-                ) : null}
-              </List>
-              ):null}
+                  <ListItem>
+                    <ListIcon as={FaCalendarCheck} color="teal.500" />
+                    Operates {describeDays(tour.days_operation)}
+                  </ListItem>
+                  <ListItem>
+                    <ListIcon as={MdAccessTimeFilled} color="teal.500" />
+                    Open from {tour.operates_from} to {tour.operates_to}
+                  </ListItem>
+                  {tour.phone_number ? (
+                    <ListItem>
+                      <ListIcon as={FaPhone} color="teal.500" />
+                      {tour.phone_number}
+                    </ListItem>
+                  ) : null}
+                </List>
+              ) : null}
             </Skeleton>
             <Skeleton isLoaded={!loading} mb={3}>
               <Box w="full" mt={5}>
-                
+                <Card>
+                  <CardBody>
+                    <Flex justifyContent="center" mb={3}>
+                      <Text
+                        fontWeight="bold"
+                        fontSize={20}
+                        mb={3}
+                        className="border-b-4 border-teal-500"
+                      >
+                        Reserve your spot!
+                      </Text>
+                    </Flex>
+                    <Box>
+                      <FormControl mb={3} isRequired>
+                        <FormLabel>Date & Time of reservation</FormLabel>
+                        <InputGroup>
+                          <InputLeftElement pointerEvents="none">
+                            <IoTimeSharp color="teal.300" />
+                          </InputLeftElement>
+                          <Input
+                            type="datetime-local"
+                            value={tourDateTime}
+                            onChange={(e) => setTourDateTime(e.target.value)}
+                          />
+                        </InputGroup>
+                      </FormControl>
+
+                      <FormControl mb={3} isRequired>
+                        <FormLabel>Number of assistants</FormLabel>
+                        <InputGroup>
+                          <InputLeftElement pointerEvents="none">
+                            <IoTimeSharp color="teal.300" />
+                          </InputLeftElement>
+                          <Input
+                            type="number"
+                            value={assistants}
+                            onChange={(e) => setAssistants(e.target.value)}
+                          />
+                        </InputGroup>
+                      </FormControl>
+
+                      {user ? (
+                        <>
+                          <Button
+                            w="full"
+                            py={5}
+                            rounded="full"
+                            colorScheme="green"
+                            fontSize="lg"
+                            mb={3}
+                            onClick={handleAddSubmit}
+                          >
+                            Add to my itinerary
+                          </Button>
+                          <Button
+                            w="full"
+                            py={5}
+                            rounded="full"
+                            colorScheme="teal"
+                            fontSize="lg"
+                          >
+                            Reserve Now!
+                          </Button>
+                        </>
+                      ) : (
+                        <>
+                          <Text
+                            fontWeight="bold"
+                            color="teal"
+                            fontSize={15}
+                            align="center"
+                            mb={3}
+                          >
+                            Login now to reserve your spot at{" "}
+                            {tour ? tour.name : null}
+                          </Text>
+                          <Flex justifyContent="center" color="white">
+                            <AccessBtn>Login</AccessBtn>
+                            <AccessBtn>Register</AccessBtn>
+                          </Flex>
+                        </>
+                      )}
+                    </Box>
+                  </CardBody>
+                </Card>
               </Box>
             </Skeleton>
           </Box>
@@ -242,13 +401,16 @@ export default function Tour({ params }) {
           ) : (
             <>
               <Flex justifyContent="center">
-              <Text fontWeight="bold" fontSize={25} mb={3} className="border-b-4 border-teal-500">Reviews</Text>
+                <Text
+                  fontWeight="bold"
+                  fontSize={25}
+                  mb={3}
+                  className="border-b-4 border-teal-500"
+                >
+                  Reviews
+                </Text>
               </Flex>
-              <Reviews
-              reviews={tour.Review}
-              id={tourId}
-              type="tour"
-            />
+              <Reviews reviews={tour.Review} id={tourId} type="tour" />
             </>
           )}
         </Box>

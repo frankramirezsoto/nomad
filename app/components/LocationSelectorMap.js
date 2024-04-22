@@ -7,6 +7,11 @@ import L from 'leaflet';
 
 const LocationSelectorMap = ({ onLocationSelect = () => {}, initialLat, initialLng }) => {
   const [markerPosition, setMarkerPosition] = useState(null);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const customMarkerIcon = new L.Icon({
     iconUrl: '/assets/images/marker-icon.png',
@@ -19,6 +24,10 @@ const LocationSelectorMap = ({ onLocationSelect = () => {}, initialLat, initialL
   });
 
   useEffect(() => {
+    if (!isClient) {
+      return;
+    }
+    
     const setUserLocation = () => {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -39,7 +48,7 @@ const LocationSelectorMap = ({ onLocationSelect = () => {}, initialLat, initialL
     } else {
       setUserLocation();
     }
-  }, [initialLat, initialLng, onLocationSelect]);
+  }, [initialLat, initialLng, onLocationSelect, isClient]);
 
   function LocationMarker({ position }) {
     const map = useMap();
@@ -73,3 +82,4 @@ const LocationSelectorMap = ({ onLocationSelect = () => {}, initialLat, initialL
 };
 
 export default LocationSelectorMap;
+

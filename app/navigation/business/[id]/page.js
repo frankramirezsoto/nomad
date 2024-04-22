@@ -17,7 +17,10 @@ import {
   Container,
 } from "@chakra-ui/react";
 import ImageViewer from "@/app/components/ImageViewer";
-import LocationSelectorMap from "@/app/components/LocationSelectorMap";
+import dynamic from 'next/dynamic';
+const LocationSelectorMap = dynamic(() => import('./LocationSelectorMap'), {
+  ssr: false
+});
 import { FaLocationDot } from "react-icons/fa6";
 import { FaCalendarCheck } from "react-icons/fa";
 import { MdAccessTimeFilled } from "react-icons/md";

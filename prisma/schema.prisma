@@ -42,7 +42,7 @@ model BusinessUser {
   b_user_id  Int        @id @default(autoincrement())
   first_name String
   last_name  String
-  email      String
+  email      String     @unique
   password   String
   phone_area String?
   phone      String?
@@ -60,14 +60,13 @@ model Images {
 }
 
 model Itinerary {
-  itinerary_id Int      @id @default(autoincrement())
-  user_id      Int
-  tour_id      Int
-  tour_date    DateTime @db.Date
-  tour_time    DateTime @db.Time(6)
-  assistants   Int
-  User         User     @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "Itinerary_fk1")
-  Tour         Tour     @relation(fields: [tour_id], references: [tour_id], onDelete: NoAction, onUpdate: NoAction, map: "Itinerary_fk2")
+  itinerary_id  Int      @id @default(autoincrement())
+  user_id       Int
+  tour_id       Int
+  tour_datetime DateTime @db.Timestamp(6)
+  assistants    Int
+  User          User     @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "Itinerary_fk1")
+  Tour          Tour     @relation(fields: [tour_id], references: [tour_id], onDelete: NoAction, onUpdate: NoAction, map: "Itinerary_fk2")
 }
 
 model PaymentCard {

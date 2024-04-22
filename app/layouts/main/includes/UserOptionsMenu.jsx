@@ -10,7 +10,6 @@ import {
 } from '@chakra-ui/react'
 import { useAuth } from "@/app/context/AuthContext";
 import { FaChevronDown } from 'react-icons/fa';
-import { AiOutlineProfile } from 'react-icons/ai';
 
 export default function UserOptionsMenu() {
   const { user, logout } = useAuth();

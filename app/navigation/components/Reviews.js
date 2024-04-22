@@ -120,7 +120,7 @@ export default function Reviews({ reviews, id, type }) {
             <Card>
               <CardBody>
                 <Text mb={3}>
-                  Hey, {user ? user.first_name : null}! leave a review for this{" "}
+                  Hey, {user ? user.first_name : null}! Leave a review for this{" "}
                   {type}
                 </Text>
                 <StarRating rating={rating} setRating={setRating} size={20} />

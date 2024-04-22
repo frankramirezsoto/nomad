@@ -10,11 +10,15 @@ import {
   DrawerBody,
   DrawerContent,
   VStack,
+  DrawerFooter,
+  Flex,
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/app/context/AuthContext";
 
 const SidebarContent = () => {
   const router = useRouter()
+  const { logoutBusiness } = useAuth();
   return (
     <VStack mt={12}>
       <Button 
@@ -28,13 +32,15 @@ const SidebarContent = () => {
         My Businesses
       </Button>
       <Button w="100%" onClick={() => router.push("/business/portal/myTours")}>My Tours</Button>
+      <Button w="100%" colorScheme="red" onClick={logoutBusiness}>Logout</Button>
     </VStack>
   )
 }
 
 const Sidebar = ({ isOpen, variant, onClose }) => {
   return variant === "sidebar" ? (
-    <Box
+    <Flex alignItems="space-between">
+      <Box
       position="fixed"
       left={0}
       p={5}
@@ -45,6 +51,7 @@ const Sidebar = ({ isOpen, variant, onClose }) => {
     >
       <SidebarContent onClick={onClose} />
     </Box>
+    </Flex>
   ) : (
     <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
       <DrawerOverlay>

@@ -211,23 +211,15 @@ const BusinessAndToursSearch = ({ initialQuery = "" }) => {
         <div className="col-span-3 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
           <Skeleton
             className="min-h-72"
-            sx={{ transition: "transform 0.3s ease-in-out" }}
-            _hover={{ transform: "scale(1.1)" }}
           />
           <Skeleton
             className="min-h-72"
-            sx={{ transition: "transform 0.3s ease-in-out" }}
-            _hover={{ transform: "scale(1.1)" }}
           />
           <Skeleton
             className="min-h-72"
-            sx={{ transition: "transform 0.3s ease-in-out" }}
-            _hover={{ transform: "scale(1.1)" }}
           />
           <Skeleton
             className="min-h-72"
-            sx={{ transition: "transform 0.3s ease-in-out" }}
-            _hover={{ transform: "scale(1.1)" }}
           />
         </div>
       ) : (
@@ -248,7 +240,7 @@ const BusinessAndToursSearch = ({ initialQuery = "" }) => {
             !(filteredBusinesses.length === 0) && (
               <div>
                 <h2 className="text-2xl md:text-xl pl-2 my-2 mb-5 border-l-4  font-bold border-teal-400  dark:text-gray-200">
-                  Hotels, Restaurants & Others
+                  Hotels, Restaurants & More...
                 </h2>
 
                 <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5">

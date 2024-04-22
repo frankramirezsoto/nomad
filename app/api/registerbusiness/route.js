@@ -1,4 +1,4 @@
-import prisma from "../../prismaClient/prismaClient"
+import prisma from "../prismaClient/prismaClient"
 import { NextResponse } from "next/server";
 
 export async function POST(req, res) {
@@ -12,18 +12,17 @@ export async function POST(req, res) {
     const existingUser = await prisma.businessUser.findUnique({
       where: { email },
     });
-    console.log(existingUser);
+
     if (existingUser) {
       return NextResponse.json(
         { message: "It looks like you already have account. Login now!" },
         { status: 409 }
       );
     }
-    console.log(existingUser);
+
     // Create user
     const user = await prisma.businessUser.create({
       data: {
-        b_user_id:0,
         email,
         password,
         first_name,
