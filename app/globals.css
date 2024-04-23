@@ -18,6 +18,10 @@
   background-size: cover;
 }
 
+.react-stacked-center-carousel  {
+  overflow: visible !important;
+}
+
 /*=== Trigger  ===*/
 .animate {
   -webkit-animation-duration: 1s;

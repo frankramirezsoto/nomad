@@ -8,6 +8,7 @@ import { Text, Container, Button } from "@chakra-ui/react";
 import Logo from "@/app/components/Logo";
 import { FaArrowRight } from "react-icons/fa";
 import { useRouter } from "next/navigation";
+import CarouselHome from "./CarouselHome/CarouselHome.jsx";
 
 export default function Header() {
   const { user } = useAuth();
@@ -74,7 +75,11 @@ export default function Header() {
               </Button>
             </div>
           </div>
-          <div></div>
+          <div>
+
+              <CarouselHome />
+
+          </div>
         </Container>
       </div>
     </header>

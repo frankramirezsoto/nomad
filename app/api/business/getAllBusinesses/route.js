@@ -7,8 +7,11 @@ export async function GET(req) {
         const businesses = await prisma.business.findMany({
             include: {
                 Images: {
-                    take: 1 
-                }, 
+                    take: 1,
+                    select: {
+                        image: true
+                    }
+                },
                 BusinessTypes: true,
                 Review: true,
             },
