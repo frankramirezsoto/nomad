@@ -24,6 +24,8 @@ import ItineraryDisplay from "@/app/components/ItineraryDisplay";
 function ItineraryCart() {
   const { user } = useAuth();
 
+  
+
   return (
     <Popover>
       <PopoverTrigger>
@@ -51,7 +53,7 @@ function ItineraryCart() {
             <PopoverBody>
               <ItineraryDisplay />
               <Flex justifyContent="end">
-                <Button colorScheme="teal">Checkout</Button>
+                <a href="/checkout" className="bg-teal-700 text-white font-bold py-3 px-4 rounded-full hover:bg-teal-600" target="_blank">Checkout</a>
               </Flex>
             </PopoverBody>
           </PopoverContent>

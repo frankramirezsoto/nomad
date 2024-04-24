@@ -14,8 +14,8 @@ export default function Header() {
   const { user } = useAuth();
   const router = useRouter();
   return (
-    <header className="bg-home text-white min-h-screen ">
-      <div className="backdrop-brightness-50 py-5 lg:py-7 ">
+    <header className="bg-home text-white min-h-[125vh] md:min-h-screen overflow-hidden ">
+      <div className="backdrop-brightness-50 py-5 lg:py-7">
         <Container
           maxW="95vw"
           display="flex"
@@ -42,9 +42,9 @@ export default function Header() {
         </Container>
         <Container
           maxW="95vw"
-          className="grid grid-cols-1 lg:grid-cols-2 h-[90vh]"
+          className="grid grid-cols-1 lg:grid-cols-2"
         >
-          <div className="flex justify-center lg:justify-start mt-12 lg:mt-[17rem]">
+          <div className="flex justify-center lg:justify-start items-center mt-12 md:mt-0 md:mb-12">
             <div className="mx-4">
               <Text
                 fontSize={50}
@@ -77,8 +77,8 @@ export default function Header() {
               </Box>
             </div>
           </div>
-          <Box className="mt-12 lg:mt-[10rem] min-h-[60vh]">
-            <CarouselHome />
+          <Box className="flex items-center min-h-[80vh] md:mt-0 md:mb-12">
+            <CarouselHome/>
           </Box>
         </Container>
       </div>

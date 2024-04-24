@@ -103,7 +103,7 @@ export default function ItineraryDisplay() {
 }
   return (
     <>
-      {itineraries && itineraries.map((itinerary) => {
+      {itineraries ? (itineraries.map((itinerary) => {
         return (
           <Skeleton isLoaded={!loading}>
             <Card mb={3}>
@@ -151,7 +151,11 @@ export default function ItineraryDisplay() {
             </Card>
           </Skeleton>
         );
-      })}
+      })):(
+        <Text align="center" fontWeight="bold" p={3}>
+                You haven't added any tours to your itinerary, <span className="text-teal-700"><a href="/navigation" target="_blank">find your next adventure now!</a></span>
+              </Text>
+      )}
     </>
   );
 }

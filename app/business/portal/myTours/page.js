@@ -39,11 +39,6 @@ export default function MyTours() {
       router.push("/business/login");
     }
   }, [businessUser]);
-
-  const reservations = [];
-  tours.map(tour=>tour.Reservation?.map(reservation => reservations.push(reservation)));
-
-  reservations.filter(reservation => reservation.status == "sent")
   
   return (
     <BusinessLayout>

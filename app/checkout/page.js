@@ -37,15 +37,13 @@ export default function Checkout() {
   const toast = useToast();
   //State for Reservation Data
   const [reservation, setReservation] = useState({
-    user_id: user.user_id,
+    user_id: user?.user_id,
     first_name: "",
     last_name: "",
     email: "",
     phone: "",
-    reservation_comment:"",
+    reservation_comment: "",
   });
-
-  console.log(JSON.stringify({reservation: reservation, itineraries: itineraries, total:total}))
 
   //Effect to fetch itineraries
   useEffect(() => {
@@ -64,7 +62,7 @@ export default function Checkout() {
       };
       const userId = user.user_id;
       fetchCartItemsByUserId(userId);
-    }
+    } 
   }, [user, reloadItinerary]);
 
   useEffect(() => {
@@ -112,12 +110,22 @@ export default function Checkout() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({reservation: reservation, itineraries: itineraries, total:total}),
+        body: JSON.stringify({
+          reservation: reservation,
+          itineraries: itineraries,
+          total: total,
+        }),
       });
 
       if (response.ok) {
-        alert("ok");
-        
+        router.push("/account/myReservations");
+        toast({
+          title: `Thankyour for your reservation! We hope you enjoy your adventure!`,
+          duration: 9000,
+          isClosable: true,
+          status: "success",
+          position: "top-right",
+        });
       } else {
         toast({
           title: "Failed to add business.",
@@ -136,12 +144,12 @@ export default function Checkout() {
         position: "top-right",
       });
     } finally {
-        setLoading(false);
+      setLoading(false);
     }
   };
   return (
     <MainLayout>
-        {loading?<ProcessingPayment></ProcessingPayment>:null}
+      {loading ? <ProcessingPayment></ProcessingPayment> : null}
       <Container maxW="85vw" my={10}>
         <Flex justifyContent="center" mb={3}>
           <Text
@@ -153,7 +161,7 @@ export default function Checkout() {
             Checkout
           </Text>
         </Flex>
-        {user ? (
+        {user && itineraries.length > 0 ? (
           <Box className="grid grid-cols-1 lg:grid-cols-3 gap-5">
             <Box>
               <Card>
@@ -172,9 +180,14 @@ export default function Checkout() {
             <Box className="col-span-2">
               <Card backgroundColor="teal.600" textColor="white">
                 <CardHeader h="20vh" className="bg-random overflow-hidden">
-                    <Flex h="20vh" className="backdrop-contrast-50" alignItems="center" justifyContent="center">
-                        <Logo className></Logo>
-                    </Flex>
+                  <Flex
+                    h="20vh"
+                    className="backdrop-contrast-50"
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    <Logo className></Logo>
+                  </Flex>
                 </CardHeader>
                 <CardBody>
                   <Text fontWeight="bold" fontSize={20} align="center" mb={5}>
@@ -286,18 +299,18 @@ export default function Checkout() {
                       />
                     </FormControl>
                   </Box>
-                    {/* Additional Comment */}
-                    <FormControl mt={5}>
-                      <FormLabel>Additional comments</FormLabel>
-                      <Textarea
-                        id="reservation_comment"
-                        name="reservation_comment"
-                        backgroundColor="white"
-                        textColor="black"
-                        value={reservation.reservation_comment}
-                        onChange={handleChange}
-                      />
-                    </FormControl>
+                  {/* Additional Comment */}
+                  <FormControl mt={5}>
+                    <FormLabel>Additional comments</FormLabel>
+                    <Textarea
+                      id="reservation_comment"
+                      name="reservation_comment"
+                      backgroundColor="white"
+                      textColor="black"
+                      value={reservation.reservation_comment}
+                      onChange={handleChange}
+                    />
+                  </FormControl>
                   <Button
                     w="full"
                     mt={5}
@@ -315,7 +328,26 @@ export default function Checkout() {
               </Card>
             </Box>
           </Box>
-        ) : null}
+        ) : (
+            <Flex minH="60vh" justifyContent="center" alignItems="center">
+                <Flex direction='column'>
+                    <Text fontSize={25} fontWeight='bold' align='center'>It looks like you have no items on your Itinerary!</Text>
+                    <Text fontSize={20} align='center'>Start navigating to find your next adventure!</Text>
+                    <Button
+                  onClick={() => router.push("/navigation")}
+                  colorScheme="teal"
+                  mt={5}
+                  rounded="full"
+                  shadow="dark-lg"
+                  px={12}
+                  py={8}
+                  fontSize="lg"
+                >
+                  Find your next adventure! 
+                </Button>
+                </Flex>
+            </Flex>
+        )}
       </Container>
     </MainLayout>
   );

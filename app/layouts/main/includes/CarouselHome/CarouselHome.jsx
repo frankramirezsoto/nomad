@@ -10,24 +10,29 @@ import { Slide } from "./Slide";
 
 const data = [
   {
-    image: "https://picsum.photos/200/300/?random=1",
-    text: "hello"
+    image: `http://${window.location.host}/assets/images/featured/1.jpeg`,
+    text: "Finca Koki",
+    tour_id: 11
   },
   {
-    image: "https://picsum.photos/200/300/?random=12",
-    text: "lel"
+    image: `http://${window.location.host}/assets/images/featured/2.jpeg`,
+    text: "Desafío Costa Rica",
+    tour_id: 7
   },
   {
-    image: "https://picsum.photos/200/300/?random=13",
-    text: "kak"
+    image: `http://${window.location.host}/assets/images/featured/3.jpeg`,
+    text: "Ruta de las Mariposas y Café",
+    tour_id: 12
   },
   {
-    image: "https://picsum.photos/200/300/?random=15",
-    text: "kk"
+    image: `http://${window.location.host}/assets/images/featured/4.jpeg`,
+    text: "EcoFinca La Catarata",
+    tour_id: 8
   },
   {
-    image: "https://picsum.photos/200/300/?random=10",
-    text: "hello"
+    image: `http://${window.location.host}/assets/images/featured/5.jpeg`,
+    text: "Ciudad Esmeralda",
+    tour_id: 10,
   }
 ];
 
