@@ -103,7 +103,7 @@ export default function ItineraryDisplay() {
 }
   return (
     <>
-      {itineraries && itineraries.map((itinerary) => {
+      {itineraries.map((itinerary) => {
         return (
           <Skeleton isLoaded={!loading}>
             <Card mb={3}>
