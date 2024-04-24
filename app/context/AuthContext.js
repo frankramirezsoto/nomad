@@ -11,6 +11,7 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [businessUser, setBusinessUser] = useState(null);
+  const [reloadItinerary, setReloadItinerary] = useState(false);
 
   // Function to "log in" a user
   const login = (userData) => {
@@ -51,6 +52,8 @@ export function AuthProvider({ children }) {
   const value = {
     user,
     businessUser,
+    reloadItinerary,
+    setReloadItinerary,
     login,
     logout,
     loginBusiness,

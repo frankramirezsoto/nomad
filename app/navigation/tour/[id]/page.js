@@ -36,8 +36,7 @@ import { FaHiking } from "react-icons/fa";
 import { useAuth } from "@/app/context/AuthContext";
 import AccessBtn from "@/app/layouts/main/includes/AccessBtn";
 import dynamic from 'next/dynamic';
-
-const LocationSelectorMap = dynamic(() => import('./LocationSelectorMap'), {
+const LocationSelectorMap = dynamic(() => import('@/app/components/LocationSelectorMap'), {
   ssr: false
 });
 
@@ -49,7 +48,7 @@ export default function Tour({ params }) {
   //Gets toast to be used
   const toast = useToast();
   //Gets user if logged
-  const { user } = useAuth();
+  const { user, reloadItinerary, setReloadItinerary } = useAuth();
   //This hook is used to stored the tour obtained by the DB
   const [tour, setTour] = useState({
     b_user_id: "",
@@ -109,6 +108,7 @@ export default function Tour({ params }) {
           position: "top-right",
         });
       } else {
+        reloadItinerary ? setReloadItinerary(false) : setReloadItinerary(true);
         toast({
           title: `We hope you enjoy ${tour.name}!`,
           duration: 9000,

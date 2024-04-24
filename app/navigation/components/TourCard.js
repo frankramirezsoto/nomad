@@ -43,8 +43,10 @@ export default function TourCard({tour}){
         return price * (1 - (discountPercent / 100));
     }
     return(
-      <Box
-        onClick={() => router.push(`/navigation/tour/${tour.tour_id}`)}
+        <a
+        href={`/navigation/tour/${tour.tour_id}`}
+        target='_blank'>
+            <Box
         maxW="sm"
         borderWidth="1px"
         rounded="lg"
@@ -91,5 +93,6 @@ export default function TourCard({tour}){
             </Flex>
         </Box>
       </Box>
+        </a>
     )
 }

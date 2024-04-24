@@ -42,7 +42,7 @@ export default function CarouselHome(){
               <StackedCarousel
                 ref={carouselRef}
                 slideComponent={Slide}
-                slideWidth={200}
+                slideWidth={250}
                 carouselWidth={width}
                 data={data}
                 maxVisibleSlide={5}

@@ -147,9 +147,10 @@ export default function Reviews({ reviews, id, type }) {
         {/* Render the list of reviews */}
         <Box>
           {allReviews.length == 0 ? (
-            <Card mb={3}>
+            <Card mb={3} variant="filled"
+            colorScheme="gray">
               <CardBody>
-                <Text>
+                <Text align="center">
                   There's no reviews for this {type}... be the first to leave
                   one
                 </Text>

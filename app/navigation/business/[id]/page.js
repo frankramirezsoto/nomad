@@ -18,7 +18,7 @@ import {
 } from "@chakra-ui/react";
 import ImageViewer from "@/app/components/ImageViewer";
 import dynamic from 'next/dynamic';
-const LocationSelectorMap = dynamic(() => import('./LocationSelectorMap'), {
+const LocationSelectorMap = dynamic(() => import('@/app/components/LocationSelectorMap'), {
   ssr: false
 });
 import { FaLocationDot } from "react-icons/fa6";

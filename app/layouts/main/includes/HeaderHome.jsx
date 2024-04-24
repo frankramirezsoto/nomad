@@ -4,7 +4,7 @@ import ItineraryCart from "./ItineraryCart.jsx";
 import AccessBtn from "./AccessBtn.jsx";
 import { useAuth } from "@/app/context/AuthContext.js";
 import UserOptionsMenu from "./UserOptionsMenu.jsx";
-import { Text, Container, Button } from "@chakra-ui/react";
+import { Text, Container, Box, Flex, Button } from "@chakra-ui/react";
 import Logo from "@/app/components/Logo";
 import { FaArrowRight } from "react-icons/fa";
 import { useRouter } from "next/navigation";
@@ -14,7 +14,7 @@ export default function Header() {
   const { user } = useAuth();
   const router = useRouter();
   return (
-    <header className="bg-home text-white h-screen overflow-hidden">
+    <header className="bg-home text-white min-h-screen ">
       <div className="backdrop-brightness-50 py-5 lg:py-7 ">
         <Container
           maxW="95vw"
@@ -44,7 +44,7 @@ export default function Header() {
           maxW="95vw"
           className="grid grid-cols-1 lg:grid-cols-2 h-[90vh]"
         >
-          <div className="flex justify-center lg:justify-start items-center">
+          <div className="flex justify-center lg:justify-start mt-12 lg:mt-[17rem]">
             <div className="mx-4">
               <Text
                 fontSize={50}
@@ -57,29 +57,29 @@ export default function Header() {
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit.
                 Officiis, cupiditate. Neque cumque repellat, quos sit iusto
                 adipisci itaque nostrum nisi vero facere ipsa consequuntur
-                rerum!{" "}
+                rerum!
               </Text>
-              <Button
-                onClick={() => router.push("/navigation")}
-                colorScheme="teal"
-                mt={5}
-                rounded="full"
-                shadow="dark-lg"
-                px={12}
-                py={8}
-                fontSize="lg"
-                className="animate delay-one-h fadeInLeft"
-              >
-                {" "}
-                Find your next adventure! <FaArrowRight className="ms-5" />
-              </Button>
+              <Box className="flex justify-center lg:justify-start items-center">
+                <Button
+                  onClick={() => router.push("/navigation")}
+                  colorScheme="teal"
+                  mt={5}
+                  rounded="full"
+                  shadow="dark-lg"
+                  px={12}
+                  py={8}
+                  fontSize="lg"
+                  className="animate delay-one-h fadeInLeft"
+                >
+                  {" "}
+                  Find your next adventure! <FaArrowRight className="ms-5" />
+                </Button>
+              </Box>
             </div>
           </div>
-          <div>
-
-              <CarouselHome />
-
-          </div>
+          <Box className="mt-12 lg:mt-[10rem] min-h-[60vh]">
+            <CarouselHome />
+          </Box>
         </Container>
       </div>
     </header>

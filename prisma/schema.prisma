@@ -70,34 +70,30 @@ model Itinerary {
 }
 
 model PaymentCard {
-  card_id     Int           @id @default(autoincrement())
+  card_id     Int      @id @default(autoincrement())
   user_id     Int
   card_type   String
   card_number String
-  exp_date    DateTime      @db.Date
+  exp_date    DateTime @db.Date
   cvv         String
-  User        User          @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "PaymentCard_fk1")
-  Reservation Reservation[]
+  User        User     @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "PaymentCard_fk1")
 }
 
 model Reservation {
-  reservation_id   Int         @id @default(autoincrement())
-  user_id          Int
-  tour_id          Int
-  card_id          Int
-  first_name       String
-  last_name        String
-  email            String
-  phone_area       String
-  phone            String
-  order_date       DateTime    @db.Date
-  reservation_date DateTime    @db.Date
-  reservation_time DateTime    @db.Time(6)
-  assistants       Int
-  total            Decimal     @db.Decimal(10, 2)
-  User             User        @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "Reservation_fk1")
-  Tour             Tour        @relation(fields: [tour_id], references: [tour_id], onDelete: NoAction, onUpdate: NoAction, map: "Reservation_fk2")
-  PaymentCard      PaymentCard @relation(fields: [card_id], references: [card_id], onDelete: NoAction, onUpdate: NoAction, map: "Reservation_fk3")
+  reservation_id       Int      @id @default(autoincrement())
+  user_id              Int
+  tour_id              Int
+  first_name           String
+  last_name            String
+  email                String
+  phone                String
+  order_datetime       DateTime @db.Timestamp(6)
+  reservation_datetime DateTime @db.Timestamp(6)
+  assistants           Int
+  total                Decimal  @db.Decimal(10, 2)
+  reservation_comment  String?
+  User                 User     @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "Reservation_fk1")
+  Tour                 Tour     @relation(fields: [tour_id], references: [tour_id], onDelete: NoAction, onUpdate: NoAction, map: "Reservation_fk2")
 }
 
 model Review {

@@ -29,7 +29,7 @@ export const Slide = React.memo(function (StackedCarouselSlideProps) {
         />
       </div>
       <div className="detail fill overflow-hidden">
-        <div className="description w-full rounded-2xl text-black" style={{backgroundImage:`url(${coverImage})`,backgroundPosition:"center",objectFit:"cover"}}>
+        <div className="description w-full border-2 border-teal-500 rounded-2xl text-black" style={{backgroundImage:`url(${coverImage})`,backgroundPosition:"center",backgroundSize:"350px"}}>
           
           <p>{text}</p>
         </div>

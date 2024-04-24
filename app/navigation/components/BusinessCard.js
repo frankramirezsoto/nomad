@@ -35,8 +35,9 @@ export default function BusinessCard({business}){
         businessRating = calculateAverageRating(business.Review);
     }
     return(
-      <Box
-        onClick={() => router.push(`/navigation/business/${business.business_id}`)}
+      <a
+        href={`/navigation/business/${business.business_id}`} target='_blank'>
+          <Box
         maxW="sm"
         borderWidth="1px"
         rounded="lg"
@@ -53,5 +54,6 @@ export default function BusinessCard({business}){
             <Flex justify="start" alignItems="center" className='text-xs text-gray-500' mt={2}><span><FaLocationDot className='text-gray-500 me-2'/></span> <span>{business.canton}, {business.province}</span></Flex>
         </Box>
       </Box>
+        </a>
     )
 }
