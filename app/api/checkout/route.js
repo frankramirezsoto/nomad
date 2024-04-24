@@ -16,6 +16,7 @@ export async function POST(req) {
         const reservation = request.reservation;
         const itineraryItems = request.itineraries;
         const reservations = []
+        console.log(request)
 
         //Calculates total, per each item 
         let total = 0;
@@ -47,10 +48,16 @@ export async function POST(req) {
           data: reservations,
         });
 
+        const deleteItineraries = await prisma.itinerary.deleteMany({
+            where: {
+                user_id: parseInt(reservation.user_id),
+            },
+        });
+
         // Send the created business as a response
         return NextResponse.json({data: newReservations}, { status: 200 })
       } catch (error) {
-        console.error('Failed to add new business:', error);
+        console.error('Failed to add new reservation:', error);
         return NextResponse.json({error: 'Failed to add new reservations'}, { status: 500 }) 
       }
 }

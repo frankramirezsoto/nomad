@@ -42,6 +42,25 @@ export default function MyTours() {
   
   return (
     <BusinessLayout>
+      <Center>
+              <Box textAlign="center">
+                  <Text fontSize="3xl" fontWeight="bold" mb={4} color="#0F766E" bg="white" px={1} py={1} borderRadius="md">
+                  Tours
+                  </Text>
+                  <Text fontSize="15" mt={4}>
+                  Share all the new experiences that you can offer and find new friends to share it with!
+                  </Text>
+                  <Text fontSize="15">
+                  If you own a tour agency and wish to offer your services click on the "+" to add a tour of your own.
+                  </Text>
+                  <Text fontSize="15">
+                  When adding the tour information be detailed as that can help attract new clients.
+                  </Text>
+                  <Text fontSize="15">
+                  Once done your new tours will be displayed on this page.
+                  </Text>
+              </Box>
+      </Center>
       <Box className="p-7 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         <Box
           as="Button"

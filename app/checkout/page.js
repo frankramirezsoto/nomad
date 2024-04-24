@@ -37,7 +37,6 @@ export default function Checkout() {
   const toast = useToast();
   //State for Reservation Data
   const [reservation, setReservation] = useState({
-    user_id: user?.user_id,
     first_name: "",
     last_name: "",
     email: "",
@@ -62,6 +61,7 @@ export default function Checkout() {
       };
       const userId = user.user_id;
       fetchCartItemsByUserId(userId);
+      setReservation({...reservation, user_id: user.user_id})
     } 
   }, [user, reloadItinerary]);
 

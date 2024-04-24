@@ -38,6 +38,25 @@ export default function MyBusinesses() {
 
   return (
     <BusinessLayout>
+      <Center>
+            <Box textAlign="center">
+                <Text fontSize="3xl" fontWeight="bold" mb={4} color="#0F766E" bg="white" px={1} py={1} borderRadius="md">
+                Businesses
+                </Text>
+                <Text fontSize="15" mt={4}>
+                In this page you are able to add a business you'll like to offer the public and become a Nomada member!
+                </Text>
+                <Text fontSize="15">
+                If you own a restaurant/souvenir shop/coffeshop and wish to offer your services click on the "+" to add your business.
+                </Text>
+                <Text fontSize="15">
+                Please keep in mind that all information is usefull so be detailed when adding all the information about your business.
+                </Text>
+                <Text fontSize="15">
+                Once done your new business will be displayed on this page.
+                </Text>
+            </Box>
+    </Center>
       <Box className="p-7 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         <Box
           as="Button"

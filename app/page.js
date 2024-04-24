@@ -5,6 +5,8 @@ import { Box, Flex, Text } from "@chakra-ui/react";
 import { FaSearch } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import TourCarousel from "./components/TourCarousel";
+import BusinessCarousel from "./components/BusinessCarousel";
 
 export default function Home() {
   const router = useRouter();
@@ -42,6 +44,32 @@ export default function Home() {
             </Box>
           </Box>
         </Flex>
+      </section>
+      <section>
+      <Flex justifyContent="center" mb={3}>
+          <Text
+            fontWeight="bold"
+            fontSize={25}
+            mb={3}
+            className="border-b-4 border-teal-500"
+          >
+            Check out our tours!
+          </Text>
+        </Flex>
+        {/* <TourCarousel></TourCarousel> */}
+      </section>
+      <section>
+      <Flex justifyContent="center" mb={3}>
+          <Text
+            fontWeight="bold"
+            fontSize={25}
+            mb={3}
+            className="border-b-4 border-teal-500"
+          >
+            Hotels, Restaurants & More...
+          </Text>
+        </Flex>
+        {/* <BusinessCarousel></BusinessCarousel> */}
       </section>
     </HomeLayout>
   );
