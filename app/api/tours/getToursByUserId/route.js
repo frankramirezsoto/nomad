@@ -13,7 +13,13 @@ export async function GET(req) {
         b_user_id: parseInt(b_user_id), // Ensure the ID is an integer
       },
       include: {
-        Images: true, // Include related images
+        Images: {
+          take: 1,
+          select: {
+            image: true,
+          },
+        },
+        Reservation: true,
       },
     });
     await prisma.$disconnect();

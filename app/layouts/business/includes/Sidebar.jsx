@@ -31,7 +31,8 @@ const SidebarContent = () => {
       >
         My Businesses
       </Button>
-      <Button w="100%" onClick={() => router.push("/business/portal/myTours")}>My Tours</Button>
+      <Button w="100%" colorScheme="teal" onClick={() => router.push("/business/portal/myTours")}>My Tours</Button>
+      <Button w="100%" colorScheme="teal" onClick={() => router.push("/business/portal/myTours")}>My Reservations</Button>
       <Button w="100%" colorScheme="red" onClick={logoutBusiness}>Logout</Button>
     </VStack>
   )
