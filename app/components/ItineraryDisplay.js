@@ -93,9 +93,17 @@ export default function ItineraryDisplay() {
       });
     }
   };
+
+  //Function to calculate discounted price
+  function calculateDiscountedPrice(price, discountPercent) {
+    if (discountPercent < 0 || discountPercent > 100) {
+        throw new Error("Invalid discount percentage. Must be between 0 and 100.");
+    }
+    return price * (1 - (discountPercent / 100));
+}
   return (
     <>
-      {itineraries.map((itinerary) => {
+      {itineraries && itineraries.map((itinerary) => {
         return (
           <Skeleton isLoaded={!loading}>
             <Card mb={3}>
@@ -119,6 +127,14 @@ export default function ItineraryDisplay() {
                       </a>
                       <Text fontSize={14} color="gray.400">
                         {getDateAndTime(new Date(itinerary.tour_datetime))}
+                      </Text>
+                      <Text fontSize={14} color="gray.700">
+                        Total: $
+                        {itinerary.Tour.discount ? (
+                          calculateDiscountedPrice(itinerary.Tour.price_person, itinerary.Tour.discount)
+                        ):(
+                          itinerary.Tour.price_person * itinerary.assistants
+                        )}
                       </Text>
                     </Box>
                   </Flex>

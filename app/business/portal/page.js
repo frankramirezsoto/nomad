@@ -10,9 +10,6 @@ export default function BusinessPortal(){
     const { businessUser } = useAuth();
     const router = useRouter();
 
-    if(!businessUser){
-        router.push('/business/login');
-    }
     return(
         <BusinessLayout></BusinessLayout>
     )

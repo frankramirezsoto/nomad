@@ -32,7 +32,7 @@ export default function Home() {
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
               <button
-                onClick={() => router.push(`/navigation?s=${searchQuery}`)}
+                onClick={() => router.push(`/navigation?s=${searchQuery ? searchQuery : ""}`)}
                 type="submit"
                 className="absolute inline-flex items-center h-10 px-4 py-2 text-sm text-white transition duration-150 ease-in-out rounded-full outline-none right-3 top-3 bg-teal-600 sm:px-6 sm:text-base sm:font-medium hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
               >

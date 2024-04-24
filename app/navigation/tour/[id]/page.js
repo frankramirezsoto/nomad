@@ -213,6 +213,14 @@ export default function Tour({ params }) {
     return ranges.join(", ");
   }
 
+  //Function to calculate discounted price
+  function calculateDiscountedPrice(price, discountPercent) {
+    if (discountPercent < 0 || discountPercent > 100) {
+        throw new Error("Invalid discount percentage. Must be between 0 and 100.");
+    }
+    return price * (1 - (discountPercent / 100));
+}
+
   return (
     <MainLayout>
       <Skeleton isLoaded={!loading}>
@@ -345,6 +353,12 @@ export default function Tour({ params }) {
                           />
                         </InputGroup>
                       </FormControl>
+                      
+                      <Text mb={3} fontSize={20} fontWeight="bold">Total: ${tour.discount ? (
+                        calculateDiscountedPrice(tour.price_person, tour.discount) * assistants
+                      ) : (
+                        tour.price_person * assistants
+                      )}</Text>
 
                       {user ? (
                         <>
@@ -378,7 +392,7 @@ export default function Tour({ params }) {
                             align="center"
                             mb={3}
                           >
-                            Login now to reserve your spot at{" "}
+                            Login now to reserve your spot at
                             {tour ? tour.name : null}
                           </Text>
                           <Flex justifyContent="center" color="white">

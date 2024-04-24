@@ -1,10 +1,10 @@
-import prisma from "../../prismaClient/prismaClient"
-import { NextResponse } from 'next/server';
+import prisma from "../../prismaClient/prismaClient";
+import { NextResponse } from "next/server";
 
 export async function GET(req) {
-    //Gets the id by the searchParams
-    const searchParams = new URL(req.url).searchParams;
-    const b_user_id = searchParams.get('b_user_id');
+  //Gets the id by the searchParams
+  const searchParams = new URL(req.url).searchParams;
+  const b_user_id = searchParams.get("b_user_id");
 
   try {
     // Fetch tours by b_user_id including related images
@@ -13,13 +13,22 @@ export async function GET(req) {
         b_user_id: parseInt(b_user_id), // Ensure the ID is an integer
       },
       include: {
-        Images: true, // Include related images
+        Images: {
+          take: 1,
+          select: {
+            image: true,
+          },
+        },
+        Reservation: true,
       },
     });
     await prisma.$disconnect();
 
-    return NextResponse.json({data: tours}, { status: 200 })
+    return NextResponse.json({ data: tours }, { status: 200 });
   } catch (error) {
-    return NextResponse.json({error: 'Failed to fetch businesses'}, { status: 500 }) 
+    return NextResponse.json(
+      { error: "Failed to fetch businesses" },
+      { status: 500 }
+    );
   }
 }

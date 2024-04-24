@@ -14,7 +14,7 @@ const ImageViewer = ({ imageUrls }) => {
   // Correctly destructure imageUrls from props
   const [slideIndex, setSlideIndex] = useState(0);
   const [image, setImage] = useState(imageUrls[0]);
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const nextSlide = () => {
     const nextIndex = (slideIndex + 1) % imageUrls.length;

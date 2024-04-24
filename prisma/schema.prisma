@@ -92,6 +92,7 @@ model Reservation {
   assistants           Int
   total                Decimal  @db.Decimal(10, 2)
   reservation_comment  String?
+  status               String
   User                 User     @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "Reservation_fk1")
   Tour                 Tour     @relation(fields: [tour_id], references: [tour_id], onDelete: NoAction, onUpdate: NoAction, map: "Reservation_fk2")
 }
