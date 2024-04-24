@@ -40,6 +40,11 @@ export default function MyTours() {
     }
   }, [businessUser]);
 
+  const reservations = [];
+  tours.map(tour=>tour.Reservation?.map(reservation => reservations.push(reservation)));
+
+  reservations.filter(reservation => reservation.status == "sent")
+  
   return (
     <BusinessLayout>
       <Box className="p-7 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
