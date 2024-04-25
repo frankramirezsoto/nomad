@@ -28,7 +28,6 @@ export default function ItineraryDisplay() {
           );
           const data = await response.json();
           setItineraries(data.data);
-          console.log(data.data);
         } catch (error) {
           console.error("Error:", error);
         } finally {
